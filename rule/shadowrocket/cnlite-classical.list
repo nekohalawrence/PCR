@@ -1,7 +1,7 @@
 # name: cnlite-classical
 # content: 
 # update_date: 20250422
-# update_url: https://raw.githubusercontent.com/LaolunsiG/PCR/refs/heads/main/Rules/Shadowrocket/ChinaLite/ChinaLite-Classical.list
+# update_url: https://raw.githubusercontent.com/nekohalawrence/PCR/main/rule/Shadowrocket/cnlite-classical.list
 # repo: https://github.com/nekohalawrence/PCR/tree/main/rule/shadowrocket
 
 # content: 
@@ -10,13 +10,7 @@
 # DOMAIN-KEYWORD
 # IP-CIDR
 
-# webstacknav
-DOMAIN,webstacknav.xiaoe.x10.mx
-DOMAIN,webstacknav.xiaoelaolunsi.ip-ddns.com
-DOMAIN,webstacknav.xiaoe.ggff.net
-DOMAIN,webstacknav.xiaoe520.dpdns.org
-# blog
-DOMAIN,blog.xiaoelaolunsi.ip-ddns.com
-DOMAIN,blog.xiaoelaolunsi.dpdns.org
-DOMAIN,blog.xiaoe520.dpdns.org
-DOMAIN,blog.nekoha520.dpdns.org
+# DOMAIN-SUFFIX,xiaoe520.dpdns.org
+# DOMAIN-SUFFIX,nekoha520.dpdns.org
+# DOMAIN-SUFFIX,nekoha.dpdns.org
+# DOMAIN-SUFFIX,xiaoelaolunsi.dpdns.org

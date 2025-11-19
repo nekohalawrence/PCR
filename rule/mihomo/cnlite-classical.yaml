@@ -1,11 +1,11 @@
 # name: cnlite
 # content: 这个规则用于收集一些直连的漏网之鱼规则，因为有些个人博客或小众的论坛并没有被大规则收录，规则如果设置的是黑名单可能没有问题，但如果是白名单就会出现问题，因为国内直连访问比代理更快就会出现连接很慢的问题。
 # update_date: 20250807
-# update_url: https://github.com/LaolunsiG/PCR/raw/main/rule/mihomo/ChinaLite/ChinaLite-Classical.yaml
+# update_url: https://raw.githubusercontent.com/nekohalawrence/PCR/main/rule/mihomo/cnlite-classical.yaml
 # repo: https://github.com/nekohalawrence/PCR/tree/main/rule/mihomo
 
 # DOMAIN-SUFFIX
 # DOMAIN-KEYWORD
 
 payload:
-  - DOMAIN-KEYWORD,ticktick.com
+  # - DOMAIN-KEYWORD,ticktick.com
