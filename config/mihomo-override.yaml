@@ -1,12 +1,4 @@
 # -------------------------------------
-# 出站配置
-# -------------------------------------
-# 代理集-锚点配置
-proxy-provider-anchor:
-  NodeParam: &NodeParam {type: http, interval: 3600, health-check: {enable: true, lazy: true, url: 'https://www.google.com/generate_204', timeout: 3000, interval: 60, expected-status: 204}, header: {User-Agent: ["clash-verge/v2.2.3", "ClashMetaForAndroid/2.11.2.Meta", "ClashforWindows/0.19.23", "clash.meta", "mihomo"]}}
-
-
-# -------------------------------------
 # 全局配置
 # -------------------------------------
 allow-lan: true   # 允许局域网连接
@@ -73,7 +65,6 @@ tun:
   device: mihomo
   # dns 劫持，将匹配到的连接导入内部 dns 模块，不书写协议则为 udp://
   dns-hijack: ['any:53', "tcp://any:53"]       
-  udp-timeout: 300
   auto-route: true             # 自动设置全局路由，可以自动将全局流量路由进入 tun 网卡。
   strict-route: true           # 防止地址泄漏，并使 DNS 劫持在 Android 上工作。
   auto-detect-interface: true  # 自动选择流量出口接口，多出口网卡同时连接的设备建议手动指定出口网卡
@@ -108,10 +99,11 @@ hosts:
 # -------------------------------------
 # DNS 锚点配置
 dns-anchor:
-  udp-1: &udp-1 [system, 223.5.5.5, 119.29.29.29, 180.184.2.2]
+  udp-1: &udp-1 [system, 223.5.5.5, 119.29.29.29, 180.184.2.2, 114.114.114.114, 1.2.4.8]
   udp-2: &udp-2 [223.5.5.5, 119.29.29.29, 114.114.114.114, 1.2.4.8]
   doh-1: &doh-1 [https://dns.google/dns-query, https://dns.cloudflare.com/dns-query]
   doh-2: &doh-2 [https://dns.alidns.com/dns-query, https://doh.pub/dns-query]
+  doh-3: &doh-3 [https://dns.alidns.com/dns-query, https://doh.pub/dns-query, https://dns.google/dns-query, https://dns.cloudflare.com/dns-query]
 
 dns:
   enable: true          # 关闭将使用系统 DNS
@@ -126,7 +118,7 @@ dns:
   # 默认 DNS, 用于解析 DNS 服务器 的域名，必须为 IP, 可为加密 DNS
   default-nameserver: *udp-2
   # 专用于节点域名解析的 DNS 服务器，非必要配置项，因为大部分的代理服务器都是 IP 地址
-  proxy-server-nameserver: *udp-2
+  proxy-server-nameserver: *doh-3
   nameserver-policy:
     'rule-set:connectivity-check,private,cn': *udp-1
   # 兜底，默认的域名解析服务器，解析代理服务器的 IP 地址；匹配直连策略或遇到 IP 规则时会进行本地（直连） DNS 解析，如不配置 fallback/proxy-server-nameserver , 则所有域名都由 nameserver 解析。
@@ -190,27 +182,25 @@ regular-anchor:
 # 策略组锚点
 strategy-anchor:  
   ## 手动选择参数
-  select-test: &select-test {type: select, interval: 60, url: 'https://www.google.com/generate_204', disable-udp: false, timeout: 3000, max-failed-times: 3, lazy: true, hidden: false, expected-status: 204}
-  select-direct: &select-direct {type: select, proxies: [🎯 Direct, 🚀 Proxy, 🗺 Nation-urltest, 🗺 Nation-roundrobin , 🗺 Nation-consistent, 🇮🇳 India-urltest, 🇭🇰 Hong Kong-urltest, 🇯🇵 Japan-urltest, 🇰🇷 Korea-urltest, 🇲🇴 Oman-urltest, 🇷🇺 Russia-urltest, 🇸🇬 Singapore-urltest, 🇨🇳 Taiwan-urltest, 🇦🇺 Australia-urltest, 🇦🇷 Argentinaia-urltest, 🇫🇷 France-urltest, 🇩🇪 Germany-urltest, 🇮🇪 Ireland-urltest, 🇳🇱 Netherlands-urltest, 🇹🇷 Turkey-urltest, 🇬🇧 United Kingdom-urltest, 🇨🇦 Canada-urltest, 🇺🇸 United States-urltest], interval: 60, url: 'https://www.google.com/generate_204', disable-udp: false, timeout: 3000, max-failed-times: 3, lazy: true, hidden: false, expected-status: 204}
-  select-proxy: &select-proxy {type: select, proxies: [🚀 Proxy, 🎯 Direct, 🗺 Nation-urltest, 🗺 Nation-roundrobin , 🗺 Nation-consistent, 🇮🇳 India-urltest, 🇭🇰 Hong Kong-urltest, 🇯🇵 Japan-urltest, 🇰🇷 Korea-urltest, 🇲🇴 Oman-urltest, 🇷🇺 Russia-urltest, 🇸🇬 Singapore-urltest, 🇨🇳 Taiwan-urltest, 🇦🇺 Australia-urltest, 🇦🇷 Argentinaia-urltest, 🇫🇷 France-urltest, 🇩🇪 Germany-urltest, 🇮🇪 Ireland-urltest, 🇳🇱 Netherlands-urltest, 🇹🇷 Turkey-urltest, 🇬🇧 United Kingdom-urltest, 🇨🇦 Canada-urltest, 🇺🇸 United States-urltest], interval: 60, url: 'https://www.google.com/generate_204', disable-udp: false, timeout: 3000, max-failed-times: 3, lazy: true, hidden: false, expected-status: 204}
-  select-proxy-1: &select-proxy-1 {type: select, proxies: [🗺 Nation-urltest, 🗺 Nation-roundrobin , 🗺 Nation-consistent, 🌐 Other-urltest, 🌐 Other-roundrobin, 🌐 Other-consistent, 🇮🇳 India-roundrobin, 🇭🇰 Hong Kong-roundrobin, 🇯🇵 Japan-roundrobin, 🇰🇷 Korea-roundrobin, 🇲🇴 Oman-roundrobin, 🇷🇺 Russia-roundrobin, 🇸🇬 Singapore-roundrobin, 🇨🇳 Taiwan-roundrobin, 🇦🇺 Australia-roundrobin, 🇦🇷 Argentinaia-roundrobin, 🇫🇷 France-roundrobin, 🇩🇪 Germany-roundrobin, 🇳🇱 Netherlands-roundrobin, 🇹🇷 Turkey-roundrobin, 🇬🇧 United Kingdom-roundrobin, 🇨🇦 Canada-roundrobin, 🇺🇸 United States-roundrobin, 🎯 Direct], interval: 60, url: 'https://www.google.com/generate_204', disable-udp: false, timeout: 3000, max-failed-times: 3, lazy: true, hidden: false, expected-status: 204}
+  select-test: &select-test {type: select, interval: 360, url: 'https://cp.cloudflare.com', disable-udp: false, timeout: 3000, max-failed-times: 3, lazy: true, hidden: false, expected-status: 204}
+  select-direct: &select-direct {type: select, proxies: [🎯 Direct, 🚀 Proxy, 🇮🇳 India, 🇭🇰 Hong Kong, 🇯🇵 Japan, 🇰🇷 Korea, 🇲🇴 Oman, 🇷🇺 Russia, 🇸🇬 Singapore, 🇨🇳 Taiwan, 🇦🇺 Australia, 🇦🇷 Argentinaia, 🇫🇷 France, 🇩🇪 Germany, 🇳🇱 Netherlands, 🇹🇷 Turkey, 🇬🇧 United Kingdom, 🇨🇦 Canada, 🇺🇸 United States]}
+  select-proxy: &select-proxy {type: select, proxies: [🚀 Proxy, 🎯 Direct, 🇮🇳 India, 🇭🇰 Hong Kong, 🇯🇵 Japan, 🇰🇷 Korea, 🇲🇴 Oman, 🇷🇺 Russia, 🇸🇬 Singapore, 🇨🇳 Taiwan, 🇦🇺 Australia, 🇦🇷 Argentinaia, 🇫🇷 France, 🇩🇪 Germany, 🇳🇱 Netherlands, 🇹🇷 Turkey, 🇬🇧 United Kingdom, 🇨🇦 Canada, 🇺🇸 United States]}
   ## 时延优选参数
-  urltest: &urltest {type: url-test, tolerance: 50, interval: 60, url: 'https://www.google.com/generate_204', disable-udp: false, timeout: 3000, max-failed-times: 3, lazy: true, hidden: false, include-all: true, expected-status: 204}
+  urltest: &urltest {type: url-test, tolerance: 45, interval: 0, url: 'https://cp.cloudflare.com', disable-udp: false, timeout: 3000, max-failed-times: 3, lazy: true, hidden: true, include-all: true, expected-status: 204}
   ## 故障转移参数
-  fallback: &fallback {type: fallback, interval: 60, url: 'https://www.google.com/generate_204', disable-udp: false, timeout: 3000, max-failed-times: 3, lazy: true, hidden: false, include-all: true, expected-status: 204}
+  fallback: &fallback {type: fallback, url: 'https://cp.cloudflare.com', disable-udp: false, timeout: 3000, max-failed-times: 3, lazy: true, hidden: true, include-all: true, expected-status: 204}
   ## 负载均衡参数
-  loadbalance-roundrobin: &loadbalance-roundrobin {type: load-balance, strategy: round-robin, interval: 60, url: 'https://www.google.com/generate_204', disable-udp: false, timeout: 3000, max-failed-times: 3, lazy: true, hidden: true, include-all: true, expected-status: 204}
-  loadbalance-consistent: &loadbalance-consistent {type: load-balance, strategy: consistent-hashing, interval: 60, url: 'https://www.google.com/generate_204', disable-udp: false, timeout: 3000, max-failed-times: 3, lazy: true, hidden: true, include-all: true, expected-status: 204}
-  loadbalance-sticky: &loadbalance-sticky {type: load-balance, strategy: sticky-sessions, interval: 60, url: 'https://www.google.com/generate_204', disable-udp: false, timeout: 3000, max-failed-times: 3, lazy: true, hidden: true, include-all: true, expected-status: 204}
-
+  loadbalance-roundrobin: &loadbalance-roundrobin {type: load-balance, strategy: round-robin, interval: 0, url: 'https://cp.cloudflare.com', disable-udp: false, timeout: 3000, max-failed-times: 3, lazy: true, hidden: true, include-all: true, expected-status: 204}
+  loadbalance-consistent: &loadbalance-consistent {type: load-balance, strategy: consistent-hashing, interval: 0, url: 'https://cp.cloudflare.com', disable-udp: false, timeout: 3000, max-failed-times: 3, lazy: true, hidden: true, include-all: true, expected-status: 204}
+  loadbalance-sticky: &loadbalance-sticky {type: load-balance, strategy: sticky-sessions, interval: 0, url: 'https://cp.cloudflare.com', disable-udp: false, timeout: 3000, max-failed-times: 3, lazy: true, hidden: true, include-all: true, expected-status: 204}
 # -------------------------------------
 # 策略组
 proxy-groups:
   # ----------------节点选择策略组--------------------
   # 模块化选择
-  - {name: 🚀 Proxy, <<: *select-proxy-1, icon: https://fastly.jsdelivr.net/gh/Koolson/Qure/IconSet/Color/Rocket.png}
+  - {name: 🚀 Proxy, type: select, proxies: [🗺 Nation-urltest, 🗺 Nation-roundrobin , 🗺 Nation-consistent, 🎯 Direct], icon: https://fastly.jsdelivr.net/gh/Koolson/Qure/IconSet/Color/Rocket.png}
   # 兜底策略组
-  - {name: 🐟 漏网之鱼, <<: *select-direct, icon: https://fastly.jsdelivr.net/gh/Koolson/Qure@master/IconSet/Color/Final.png} 
+  - {name: 🐟 漏网之鱼, <<: *select-direct, interval: 360, url: 'https://cp.cloudflare.com', disable-udp: false, timeout: 3000, max-failed-times: 3, lazy: true, hidden: false, expected-status: 204, icon: https://fastly.jsdelivr.net/gh/Koolson/Qure@master/IconSet/Color/Final.png} 
   - {name: 🗺 Nation-urltest, <<: *select-test, proxies: [🌐 Other-urltest, 🇮🇳 India-urltest, 🇭🇰 Hong Kong-urltest, 🇯🇵 Japan-urltest, 🇰🇷 Korea-urltest, 🇲🇴 Oman-urltest, 🇷🇺 Russia-urltest, 🇸🇬 Singapore-urltest, 🇨🇳 Taiwan-urltest, 🇦🇺 Australia-urltest, 🇦🇷 Argentinaia-urltest, 🇫🇷 France-urltest, 🇩🇪 Germany-urltest, 🇮🇪 Ireland-urltest, 🇳🇱 Netherlands-urltest, 🇹🇷 Turkey-urltest, 🇬🇧 United Kingdom-urltest, 🇨🇦 Canada-urltest, 🇺🇸 United States-urltest], icon: https://raw.githubusercontent.com/Orz-3/mini/master/Color/Global.png}
   - {name: 🗺 Nation-roundrobin, <<: *select-test, proxies: [🌐 Other-roundrobin, 🇮🇳 India-roundrobin, 🇭🇰 Hong Kong-roundrobin, 🇯🇵 Japan-roundrobin, 🇰🇷 Korea-roundrobin, 🇲🇴 Oman-roundrobin, 🇷🇺 Russia-roundrobin, 🇸🇬 Singapore-roundrobin, 🇨🇳 Taiwan-roundrobin, 🇦🇺 Australia-roundrobin, 🇦🇷 Argentinaia-roundrobin, 🇫🇷 France-roundrobin, 🇩🇪 Germany-roundrobin, 🇳🇱 Netherlands-roundrobin, 🇹🇷 Turkey-roundrobin, 🇬🇧 United Kingdom-roundrobin, 🇨🇦 Canada-roundrobin, 🇺🇸 United States-roundrobin], icon: https://raw.githubusercontent.com/Orz-3/mini/master/Color/Global.png}
   - {name: 🗺 Nation-consistent, <<: *select-test, proxies: [🌐 Other-consistent, 🇮🇳 India-consistent, 🇭🇰 Hong Kong-consistent, 🇯🇵 Japan-consistent, 🇰🇷 Korea-consistent, 🇲🇴 Oman-consistent, 🇷🇺 Russia-consistent, 🇸🇬 Singapore-consistent, 🇨🇳 Taiwan-consistent, 🇦🇺 Australia-consistent, 🇦🇷 Argentinaia-consistent, 🇫🇷 France-consistent, 🇩🇪 Germany-consistent, 🇳🇱 Netherlands-consistent, 🇹🇷 Turkey-consistent, 🇬🇧 United Kingdom-consistent, 🇨🇦 Canada-consistent, 🇺🇸 United States-consistent], icon: https://raw.githubusercontent.com/Orz-3/mini/master/Color/Global.png}
@@ -260,6 +250,30 @@ proxy-groups:
   - {name: 🎯 Direct, type: select, proxies: [DIRECT], icon: https://fastly.jsdelivr.net/gh/Koolson/Qure@master/IconSet/Color/Direct.png}
   
   # ----------------节点测试--------------------
+  # select策略组
+  - {name: 🇮🇳 India, type: select, proxies: [🇮🇳 India-urltest, 🇮🇳 India-roundrobin, 🇮🇳 India-consistent], include-all: true, filter: *filterIN, icon: https://raw.githubusercontent.com/lipis/flag-icons/main/flags/1x1/in.svg}
+  ## Asia(亚洲)
+  - {name: 🇭🇰 Hong Kong, type: select, proxies: [🇭🇰 Hong Kong-urltest, 🇭🇰 Hong Kong-roundrobin, 🇭🇰 Hong Kong-consistent], include-all: true, filter: *filterHK, icon: https://raw.githubusercontent.com/lipis/flag-icons/main/flags/1x1/hk.svg}
+  - {name: 🇯🇵 Japan, type: select, proxies: [🇯🇵 Japan-urltest, 🇯🇵 Japan-roundrobin, 🇯🇵 Japan-consistent], include-all: true, filter: *filterJP, icon: https://raw.githubusercontent.com/lipis/flag-icons/main/flags/1x1/jp.svg}
+  - {name: 🇰🇷 Korea, type: select, proxies: [🇰🇷 Korea-urltest, 🇰🇷 Korea-roundrobin, 🇰🇷 Korea-consistent], include-all: true, filter: *filterKR, icon: https://raw.githubusercontent.com/lipis/flag-icons/main/flags/1x1/kr.svg}
+  - {name: 🇲🇴 Oman, type: select, proxies: [🇲🇴 Oman-urltest, 🇲🇴 Oman-roundrobin, 🇲🇴 Oman-consistent], include-all: true, filter: *filterMO, icon: https://raw.githubusercontent.com/lipis/flag-icons/main/flags/1x1/mo.svg}
+  - {name: 🇷🇺 Russia, type: select, proxies: [🇷🇺 Russia-urltest, 🇷🇺 Russia-roundrobin, 🇷🇺 Russia-consistent], include-all: true, filter: *filterRU, icon: https://raw.githubusercontent.com/lipis/flag-icons/main/flags/1x1/ru.svg}
+  - {name: 🇸🇬 Singapore, type: select, proxies: [🇸🇬 Singapore-urltest, 🇸🇬 Singapore-roundrobin, 🇸🇬 Singapore-consistent], include-all: true, filter: *filterSG, icon: https://raw.githubusercontent.com/lipis/flag-icons/main/flags/1x1/sg.svg}
+  - {name: 🇨🇳 Taiwan, type: select, proxies: [🇨🇳 Taiwan-urltest, 🇨🇳 Taiwan-roundrobin, 🇨🇳 Taiwan-consistent], include-all: true, filter: *filterTW, icon: https://raw.githubusercontent.com/lipis/flag-icons/main/flags/1x1/tw.svg}
+  ## Australia
+  - {name: 🇦🇺 Australia, type: select, proxies: [🇦🇺 Australia-urltest, 🇦🇺 Australia-roundrobin, 🇦🇺 Australia-consistent], include-all: true, filter: *filterAU, icon: https://raw.githubusercontent.com/lipis/flag-icons/main/flags/1x1/au.svg}
+  ## Europe(欧洲)
+  - {name: 🇦🇷 Argentinaia, type: select, proxies: [🇦🇷 Argentinaia-urltest, 🇦🇷 Argentinaia-roundrobin, 🇦🇷 Argentinaia-consistent], include-all: true, filter: *filterAR, icon: https://raw.githubusercontent.com/lipis/flag-icons/main/flags/1x1/ar.svg}
+  - {name: 🇫🇷 France, type: select, proxies: [🇫🇷 France-urltest, 🇫🇷 France-roundrobin, 🇫🇷 France-consistent], include-all: true, filter: *filterFR, icon: https://raw.githubusercontent.com/lipis/flag-icons/main/flags/1x1/fr.svg}
+  - {name: 🇩🇪 Germany, type: select, proxies: [🇩🇪 Germany-urltest, 🇩🇪 Germany-roundrobin, 🇩🇪 Germany-consistent], include-all: true, filter: *filterDE, icon: https://raw.githubusercontent.com/lipis/flag-icons/main/flags/1x1/de.svg}
+  - {name: 🇮🇪 Ireland, type: select, proxies: [🇮🇪 Ireland-urltest, 🇮🇪 Ireland-roundrobin, 🇮🇪 Ireland-consistent], include-all: true, filter: *filterIE, icon: https://raw.githubusercontent.com/lipis/flag-icons/main/flags/1x1/ie.svg}
+  - {name: 🇳🇱 Netherlands, type: select, proxies: [🇳🇱 Netherlands-urltest, 🇳🇱 Netherlands-roundrobin, 🇳🇱 Netherlands-consistent], include-all: true, filter: *filterNL, icon: https://raw.githubusercontent.com/lipis/flag-icons/main/flags/1x1/nl.svg}
+  - {name: 🇹🇷 Turkey, type: select, proxies: [🇹🇷 Turkey-urltest, 🇹🇷 Turkey-roundrobin, 🇹🇷 Turkey-consistent], include-all: true, filter: *filterTR, icon: https://raw.githubusercontent.com/lipis/flag-icons/main/flags/1x1/tr.svg}
+  - {name: 🇬🇧 United Kingdom, type: select, proxies: [🇬🇧 United Kingdom-urltest, 🇬🇧 United Kingdom-roundrobin, 🇬🇧 United Kingdom-consistent], include-all: true, filter: *filterUK, icon: https://raw.githubusercontent.com/lipis/flag-icons/main/flags/1x1/gb.svg}
+  ## North America(北美洲)
+  - {name: 🇨🇦 Canada, type: select, proxies: [🇨🇦 Canada-urltest, 🇨🇦 Canada-roundrobin, 🇨🇦 Canada-consistent], include-all: true, filter: *filterCA, icon: https://raw.githubusercontent.com/lipis/flag-icons/main/flags/1x1/ca.svg}
+  - {name: 🇺🇸 United States, type: select, proxies: [🇺🇸 United States-urltest, 🇺🇸 United States-roundrobin, 🇺🇸 United States-consistent], include-all: true, filter: *filterUS, icon: https://raw.githubusercontent.com/lipis/flag-icons/main/flags/1x1/us.svg}
+
   # urltest策略组
   - {name: 🌐 Other-urltest, <<: *urltest, filter: *filterOther, icon: https://www.clashverge.dev/assets/icons/speed.svg}
   ## Africa(非洲)
