@@ -1,0 +1,12 @@
+# name: externalcontrol-domain
+# content: 
+# update_date: 20250807
+# update_url: https://raw.githubusercontent.com/nekohalawrence/PCR/main/rule/mihomo/externalcontrol-domain.yaml
+# repo: https://github.com/nekohalawrence/PCR/tree/main/rule/mihomo
+
+payload:
+  - "clash.razord.top"
+  - "yacd.haishan.me"
+  - "board.zash.run.place"
+
+
