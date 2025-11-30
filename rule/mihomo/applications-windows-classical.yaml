@@ -1,0 +1,13 @@
+# name: applications-windows-classical
+# content: 这个规则用于收集一些Windows平台下常见的应用程序域名，方便用户根据需要进行分流设置。
+# update_date: 20251130
+# update_url: https://raw.githubusercontent.com/nekohalawrence/PCR/main/rule/mihomo/applications-windows-classical.yaml
+# repo: https://github.com/nekohalawrence/PCR/tree/main/rule/mihomo
+
+# DOMAIN
+# DOMAIN-SUFFIX
+# DOMAIN-KEYWORD
+# IP-CIDR
+
+payload:
+  - PROCESS-NAME,DingTalk.exe
