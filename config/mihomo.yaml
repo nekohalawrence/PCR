@@ -1,6 +1,7 @@
 # name: mihomo
-# update_date: 20251121
-# update_url: https://raw.githubusercontent.com/nekohalawrence/PCR/main/config/mihomo-stable.yaml
+# content: 
+# update_date: 20251202
+# update_url: https://raw.githubusercontent.com/nekohalawrence/PCR/main/config/mihomo.yaml
 # repo: https://github.com/nekohalawrence/PCR/tree/main/config
 # 图标备用: 📮✉️📪📬💫💬💥🔨🥼🚫🔰🙈🍎🎬📺🎱🍐🐝🦁💡🌵🐯🎸💻📽🌏🕹📡🦑🌟🐷🦒🐳🚦📵🎧💊🔓🚦🚥🐼⛔️🈲🌐🎯🖲️🐦🔞🎵📱🚀💳♻️🙈🍱🔂📦🔀⏱
 
@@ -10,7 +11,7 @@
 # -------------------------------------
 # 代理集-锚点配置
 proxy-provider-anchor:
-  NodeParam: &NodeParam {type: http, interval: 3600, health-check: {enable: true, lazy: false, url: 'https://www.google.com/generate_204', timeout: 3000, interval: 3600, expected-status: 204}}
+  NodeParam: &NodeParam {type: http, interval: 3600, health-check: {enable: false, lazy: false, url: 'https://www.google.com/generate_204', timeout: 3000, interval: 3600, expected-status: 204}}
 
 # 出站-本地节点
 proxies: null
@@ -40,7 +41,7 @@ log-level: info         # 日志等级 silent/error/warning/info/debug。
 ipv6: true              # 开启 IPv6 总开关，关闭阻断所有 IPv6 链接和屏蔽 DNS 请求 AAAA 记录。
 # 控制是否让 Clash 去匹配进程，always 开启，强制匹配所有进程；strict(默认)由 Clash 判断是否开启；off 不匹配进程，推荐在路由器上使用此模式。
 find-process-mode: always
-unified-delay: true     # 开启统一延迟时，会计算 RTT，以消除连接握手等带来的不同类型节点的延迟差异
+unified-delay: false    # 开启统一延迟时，会计算 RTT，以消除连接握手等带来的不同类型节点的延迟差异
 tcp-concurrent: true    # TCP 并发
 disable-keep-alive: true
 # 缓存，存储 select 选择记录，持久化 fake-ip
@@ -49,19 +50,19 @@ global-client-fingerprint: chrome
 
 # -------------------------------------
 # 外部控制器，可以使用 RESTful API 来控制你的 Clash 内核
-external-controller: 0.0.0.0:9090   # API 监听地址，你可以将 127.0.0.1 修改为 0.0.0.0 来监听所有 IP
+external-controller: 0.0.0.0:9090  # API 监听地址，你可以将 127.0.0.1 修改为 0.0.0.0 来监听所有 IP
 external-ui-url: "https://github.com/Zephyruso/zashboard/releases/latest/download/dist.zip"
-external-ui: "./Web/Zash/"
-secret: "xiaoe"                     # API 的访问密钥
+external-ui: ".webui/zashboard"    # UI 文件夹路径，可以是相对路径或绝对路径
+secret: "xiaoe"                    # API 的访问密钥
 
 # -------------------------------------
 # GEODATA 配置
 # GEOIP 数据模式
-geodata-mode: false        # 更改 geoip 使用文件，mmdb 或者 dat，可选 true/false,true 为 dat，此项有默认值 false。
+geodata-mode: true         # 更改 geoip 使用文件，mmdb 或者 dat，可选 true/false,true 为 dat，此项有默认值 false。
 # GEO 文件加载模式，standard：标准加载器；memconservative：专为内存受限 (小内存) 设备优化的加载器 (默认值)
 geodata-loader: standard
 geo-auto-update: true      # 是否自动更新
-geo-update-interval: 24    # 单位h（时），每24小时更新一次
+geo-update-interval: 48    # 单位h（时），每24小时更新一次
 geox-url:                  # 自定义 geodata url（更新地址）
   geoip: "https://github.com/MetaCubeX/meta-rules-dat/releases/download/latest/geoip.dat"
   geosite: "https://github.com/MetaCubeX/meta-rules-dat/releases/download/latest/geosite.dat"
@@ -83,20 +84,20 @@ experimental:
 # 入站配置
 # -------------------------------------
 # 代理端口配置
-# port: 7890         # http 代理端口
-# socks-port: 7891   # SOCKS5 代理服务端口
-mixed-port: 7893     # 混合端口，同时支持 HTTP(S) 和 SOCKS5 协议。您可以使用任何支持 HTTP 或 SOCKS 代理的程序连接到这个端口。
+mixed-port: 7890  # 混合端口，同时支持 HTTP(S) 和 SOCKS5 协议。您可以使用任何支持 HTTP 或 SOCKS 代理的程序连接到这个端口。
+# redir-port: 7892  # redirect透明代理端口
+# tproxy-port: 7893 # tproxy透明代理端口
 
 # -------------------------------------
 # 配置虚拟网卡，在 tun 模式下必须获得 IP 地址。
 tun:
   enable: true
   stack: mixed
-  device: mihomo
+  device: mihomo.xiaoe
   # dns 劫持，将匹配到的连接导入内部 dns 模块，不书写协议则为 udp://
   dns-hijack: ['any:53', "tcp://any:53"]       
   auto-route: true             # 自动设置全局路由，可以自动将全局流量路由进入 tun 网卡。
-  strict-route: true           # 防止地址泄漏，并使 DNS 劫持在 Android 上工作。
+  strict-route: false          # 防止地址泄漏，并使 DNS 劫持在 Android 上工作。
   auto-detect-interface: true  # 自动选择流量出口接口，多出口网卡同时连接的设备建议手动指定出口网卡
 
 
@@ -104,33 +105,36 @@ tun:
 # DNS配置
 # -------------------------------------
 # 嗅探域名
-sniffer:
-  enable: true  
-  force-dns-mapping: false     # 对 redir-host 类型识别的流量进行强制嗅探
-  parse-pure-ip: false         # 对所有未获取到域名的流量进行强制嗅探
-  override-destination: false  # 是否使用嗅探结果作为实际访问
-  sniff: {HTTP: {ports: [80, 8080-8880], override-destination: true}, TLS: {ports: [443, 8443]}, QUIC: {ports: [443, 8443]}}
-  force-domain:
-    - +.v2ex.com
-  skip-domain:
-    - Mijia Cloud
-    - '+.apple.com'
+# sniffer:
+#   enable: true  
+#   force-dns-mapping: true      # 对 redir-host 类型识别的流量进行强制嗅探
+#   parse-pure-ip: true          # 对所有未获取到域名的流量进行强制嗅探
+#   override-destination: true   # 是否使用嗅探结果作为实际访问
+#   sniff: {HTTP: {ports: [80, 8080-8880], override-destination: true}, TLS: {ports: [443, 8443]}, QUIC: {ports: [443, 8443]}}
+#   force-domain:
+#     - +.v2ex.com
+#   skip-domain:
+#     - Mijia Cloud
+#     - '+.apple.com'
 
 # -------------------------------------
 hosts:
   ## DNS hosts
-  dns.alidns.com: [223.5.5.5, 223.6.6.6]
-  dns.cloudflare.com: [104.16.133.229, 104.16.132.229]
-  dns.google: [8.8.4.4, 8.8.8.8]
   dns.twnic.tw: 101.101.101.101
-  doh.pub: [1.12.12.12, 120.53.53.53]
   doh.opendns.com: 146.112.41.2
+  doh.pub: [1.12.12.21, 120.53.53.53, 1.12.12.12]
+  dot.pub: [1.12.12.21, 120.53.53.53, 1.12.12.12]
+  "*.alidns.com": [223.5.5.5, 223.6.6.6, 2400:3200::1, 2400:3200:baba::1]
+  dns.google: [8.8.8.8, 8.8.4.4, 2001:4860:4860::8888, 2001:4860:4860::8844]
+  cloudflare-dns.com: [1.1.1.1, 1.0.0.1, 2606:4700:4700::1111, 2606:4700:4700::1001]
+  "*.cloudflare-gateway.com": [162.159.36.20, 162.159.36.5, 2606:4700:5c::a29f:2e07, 2606:4700:54::a29f:2407]
+
 
 # -------------------------------------
 # DNS 锚点配置
 dns-anchor:
-  udp-1: &udp-1 [system, 223.5.5.5, 119.29.29.29, 180.184.2.2, 114.114.114.114, 1.2.4.8]
-  udp-2: &udp-2 [223.5.5.5, 119.29.29.29, 114.114.114.114, 1.2.4.8]
+  udp-1: &udp-1 [system, 223.5.5.5, 119.29.29.29, 180.184.2.2, 114.114.114.114]
+  udp-2: &udp-2 [223.5.5.5, 119.29.29.29, 114.114.114.114, 8.8.8.8, 1.1.1.1]
   doh-1: &doh-1 [https://dns.google/dns-query, https://dns.cloudflare.com/dns-query]
   doh-2: &doh-2 [https://dns.alidns.com/dns-query, https://doh.pub/dns-query]
   doh-3: &doh-3 [https://dns.alidns.com/dns-query, https://doh.pub/dns-query, https://dns.google/dns-query, https://dns.cloudflare.com/dns-query]
@@ -141,36 +145,36 @@ dns:
   listen: 0.0.0.0:1053  # DNS 服务监听，仅支持 udp
   ipv6: true            # 是否解析 IPV6, 如为 false, 则回应 AAAA 的空解析
   enhanced-mode: fake-ip
-  fake-ip-range: 198.18.0.1/16
+  fake-ip-range: 28.0.0.1/8
   # fakeip 过滤，默认黑名单，即以下地址不会下发 fakeip 映射用于连接，回到 redir-host 模式。
   fake-ip-filter: ['rule-set:fakeip-filter,connectivity-check,private,cn']
   # ----------------DNS 服务配置--------------------
   # 默认 DNS, 用于解析 DNS 服务器 的域名，必须为 IP, 可为加密 DNS
   default-nameserver: *udp-2
   # 专用于节点域名解析的 DNS 服务器，非必要配置项，因为大部分的代理服务器都是 IP 地址
-  proxy-server-nameserver: *doh-3
-  nameserver-policy:
-    'rule-set:connectivity-check,private,cn': *udp-1
-  # 兜底，默认的域名解析服务器，解析代理服务器的 IP 地址；匹配直连策略或遇到 IP 规则时会进行本地（直连） DNS 解析，如不配置 fallback/proxy-server-nameserver , 则所有域名都由 nameserver 解析。
-  nameserver: *udp-1
-  fallback: *doh-2
-  fallback-filter: 
-    geoip: false
-    geoip-code: CN
-    # 污染 IP 或保留的 IP 地址段
-    ipcidr:
-      - 203.208.46.146/32    # 电信
-      - 219.133.40.99/32     # 电信
-      - 59.24.3.173/32       # 联通
-      - 61.240.145.66/32     # 联通
-      - 183.232.231.131/32   # 移动
-      - 111.202.21.1/32      # 移动
-      - 240.0.0.0/4          # 保留地址段
-      - 127.0.0.1/32         # 通用/回环
-      - 0.0.0.0/32           # 通用/回环
-      - 2408:4000::1/128     # 通用/回环
-      - 2409:8c00::1/128     # 通用/回环
-      - ::/128               # 通用/回环
+  proxy-server-nameserver: *udp-2
+  # nameserver-policy:
+  #   'rule-set:connectivity-check,private,cn': *doh-2
+  # # 兜底，默认的域名解析服务器，解析代理服务器的 IP 地址；匹配直连策略或遇到 IP 规则时会进行本地（直连） DNS 解析，如不配置 fallback/proxy-server-nameserver , 则所有域名都由 nameserver 解析。
+  nameserver: *doh-3
+  # fallback: *doh-2
+  # fallback-filter: 
+  #   geoip: false
+  #   geoip-code: CN
+  #   # 污染 IP 或保留的 IP 地址段
+  #   ipcidr:
+  #     - 203.208.46.146/32    # 电信
+  #     - 219.133.40.99/32     # 电信
+  #     - 59.24.3.173/32       # 联通
+  #     - 61.240.145.66/32     # 联通
+  #     - 183.232.231.131/32   # 移动
+  #     - 111.202.21.1/32      # 移动
+  #     - 240.0.0.0/4          # 保留地址段
+  #     - 127.0.0.1/32         # 通用/回环
+  #     - 0.0.0.0/32           # 通用/回环
+  #     - 2408:4000::1/128     # 通用/回环
+  #     - 2409:8c00::1/128     # 通用/回环
+  #     - ::/128               # 通用/回环
 
 
 # -------------------------------------
@@ -212,34 +216,65 @@ regular-anchor:
 # 策略组锚点
 strategy-anchor:  
   ## 手动选择参数
-  select-test: &select-test {type: select, interval: 360, url: 'https://cp.cloudflare.com', disable-udp: false, timeout: 3000, max-failed-times: 3, lazy: true, hidden: false, expected-status: 204}
-  select-direct: &select-direct {type: select, proxies: [🎯 Direct, 🚀 Proxy, 🇮🇳 India, 🇭🇰 Hong Kong, 🇯🇵 Japan, 🇰🇷 Korea, 🇲🇴 Oman, 🇷🇺 Russia, 🇸🇬 Singapore, 🇨🇳 Taiwan, 🇦🇺 Australia, 🇦🇷 Argentinaia, 🇫🇷 France, 🇩🇪 Germany, 🇳🇱 Netherlands, 🇹🇷 Turkey, 🇬🇧 United Kingdom, 🇨🇦 Canada, 🇺🇸 United States]}
-  select-proxy: &select-proxy {type: select, proxies: [🚀 Proxy, 🎯 Direct, 🇮🇳 India, 🇭🇰 Hong Kong, 🇯🇵 Japan, 🇰🇷 Korea, 🇲🇴 Oman, 🇷🇺 Russia, 🇸🇬 Singapore, 🇨🇳 Taiwan, 🇦🇺 Australia, 🇦🇷 Argentinaia, 🇫🇷 France, 🇩🇪 Germany, 🇳🇱 Netherlands, 🇹🇷 Turkey, 🇬🇧 United Kingdom, 🇨🇦 Canada, 🇺🇸 United States]}
+  select-test: &select-test {type: select, interval: 600, url: 'https://cp.cloudflare.com', disable-udp: false, timeout: 3000, max-failed-times: 2, lazy: true, hidden: false, expected-status: 204}
+  select-direct: &select-direct {type: select, proxies: [🎯 Direct, 🚀 Proxy, 🇮🇳 India, 🇭🇰 Hong Kong, 🇯🇵 Japan, 🇰🇷 Korea, 🇲🇴 Oman, 🇷🇺 Russia, 🇸🇬 Singapore, 🇨🇳 Taiwan, 🇦🇺 Australia, 🇦🇷 Argentinaia, 🇫🇷 France, 🇩🇪 Germany, 🇳🇱 Netherlands, 🇹🇷 Turkey, 🇬🇧 United Kingdom, 🇨🇦 Canada, 🇺🇸 United States], interval: 600, url: 'https://cp.cloudflare.com', disable-udp: false, timeout: 3000, max-failed-times: 2, lazy: true, hidden: false, expected-status: 204}
+  select-proxy: &select-proxy {type: select, proxies: [🚀 Proxy, 🎯 Direct, 🇮🇳 India, 🇭🇰 Hong Kong, 🇯🇵 Japan, 🇰🇷 Korea, 🇲🇴 Oman, 🇷🇺 Russia, 🇸🇬 Singapore, 🇨🇳 Taiwan, 🇦🇺 Australia, 🇦🇷 Argentinaia, 🇫🇷 France, 🇩🇪 Germany, 🇳🇱 Netherlands, 🇹🇷 Turkey, 🇬🇧 United Kingdom, 🇨🇦 Canada, 🇺🇸 United States], interval: 600, url: 'https://cp.cloudflare.com', disable-udp: false, timeout: 3000, max-failed-times: 2, lazy: true, hidden: false, expected-status: 204}
   ## 时延优选参数
-  urltest: &urltest {type: url-test, tolerance: 45, interval: 0, url: 'https://cp.cloudflare.com', disable-udp: false, timeout: 3000, max-failed-times: 3, lazy: true, hidden: true, include-all: true, expected-status: 204}
+  urltest: &urltest {type: url-test, tolerance: 50, interval: 120, url: 'https://cp.cloudflare.com', disable-udp: false, timeout: 3000, max-failed-times: 2, lazy: true, hidden: true, include-all: true, expected-status: 204}
   ## 故障转移参数
-  fallback: &fallback {type: fallback, url: 'https://cp.cloudflare.com', disable-udp: false, timeout: 3000, max-failed-times: 3, lazy: true, hidden: true, include-all: true, expected-status: 204}
+  fallback: &fallback {type: fallback, interval: 120, url: 'https://cp.cloudflare.com', disable-udp: false, timeout: 3000, max-failed-times: 2, lazy: true, hidden: true, include-all: true, expected-status: 204}
   ## 负载均衡参数
-  loadbalance-roundrobin: &loadbalance-roundrobin {type: load-balance, strategy: round-robin, interval: 0, url: 'https://cp.cloudflare.com', disable-udp: false, timeout: 3000, max-failed-times: 3, lazy: true, hidden: true, include-all: true, expected-status: 204}
-  loadbalance-consistent: &loadbalance-consistent {type: load-balance, strategy: consistent-hashing, interval: 0, url: 'https://cp.cloudflare.com', disable-udp: false, timeout: 3000, max-failed-times: 3, lazy: true, hidden: true, include-all: true, expected-status: 204}
-  loadbalance-sticky: &loadbalance-sticky {type: load-balance, strategy: sticky-sessions, interval: 0, url: 'https://cp.cloudflare.com', disable-udp: false, timeout: 3000, max-failed-times: 3, lazy: true, hidden: true, include-all: true, expected-status: 204}
+  loadbalance-roundrobin: &loadbalance-roundrobin {type: load-balance, strategy: round-robin, interval: 120, url: 'https://cp.cloudflare.com', disable-udp: false, timeout: 3000, max-failed-times: 2, lazy: true, hidden: true, include-all: true, expected-status: 204}
+  loadbalance-consistent: &loadbalance-consistent {type: load-balance, strategy: consistent-hashing, interval: 120, url: 'https://cp.cloudflare.com', disable-udp: false, timeout: 3000, max-failed-times: 2, lazy: true, hidden: true, include-all: true, expected-status: 204}
+  loadbalance-sticky: &loadbalance-sticky {type: load-balance, strategy: sticky-sessions, interval: 120, url: 'https://cp.cloudflare.com', disable-udp: false, timeout: 3000, max-failed-times: 2, lazy: true, hidden: true, include-all: true, expected-status: 204}
+
 # -------------------------------------
 # 策略组
 proxy-groups:
   # ----------------节点选择策略组--------------------
-  # 模块化选择
-  - {name: 🚀 Proxy, type: select, proxies: [🗺 Nation-urltest, 🗺 Nation-roundrobin , 🗺 Nation-consistent, 🎯 Direct], icon: https://fastly.jsdelivr.net/gh/Koolson/Qure/IconSet/Color/Rocket.png}
-  # 兜底策略组
-  - {name: 🐟 漏网之鱼, <<: *select-direct, interval: 360, url: 'https://cp.cloudflare.com', disable-udp: false, timeout: 3000, max-failed-times: 3, lazy: true, hidden: false, expected-status: 204, icon: https://fastly.jsdelivr.net/gh/Koolson/Qure@master/IconSet/Color/Final.png} 
-  - {name: 🗺 Nation-urltest, <<: *select-test, proxies: [🌐 Other-urltest, 🇮🇳 India-urltest, 🇭🇰 Hong Kong-urltest, 🇯🇵 Japan-urltest, 🇰🇷 Korea-urltest, 🇲🇴 Oman-urltest, 🇷🇺 Russia-urltest, 🇸🇬 Singapore-urltest, 🇨🇳 Taiwan-urltest, 🇦🇺 Australia-urltest, 🇦🇷 Argentinaia-urltest, 🇫🇷 France-urltest, 🇩🇪 Germany-urltest, 🇮🇪 Ireland-urltest, 🇳🇱 Netherlands-urltest, 🇹🇷 Turkey-urltest, 🇬🇧 United Kingdom-urltest, 🇨🇦 Canada-urltest, 🇺🇸 United States-urltest], icon: https://raw.githubusercontent.com/Orz-3/mini/master/Color/Global.png}
-  - {name: 🗺 Nation-roundrobin, <<: *select-test, proxies: [🌐 Other-roundrobin, 🇮🇳 India-roundrobin, 🇭🇰 Hong Kong-roundrobin, 🇯🇵 Japan-roundrobin, 🇰🇷 Korea-roundrobin, 🇲🇴 Oman-roundrobin, 🇷🇺 Russia-roundrobin, 🇸🇬 Singapore-roundrobin, 🇨🇳 Taiwan-roundrobin, 🇦🇺 Australia-roundrobin, 🇦🇷 Argentinaia-roundrobin, 🇫🇷 France-roundrobin, 🇩🇪 Germany-roundrobin, 🇳🇱 Netherlands-roundrobin, 🇹🇷 Turkey-roundrobin, 🇬🇧 United Kingdom-roundrobin, 🇨🇦 Canada-roundrobin, 🇺🇸 United States-roundrobin], icon: https://raw.githubusercontent.com/Orz-3/mini/master/Color/Global.png}
-  - {name: 🗺 Nation-consistent, <<: *select-test, proxies: [🌐 Other-consistent, 🇮🇳 India-consistent, 🇭🇰 Hong Kong-consistent, 🇯🇵 Japan-consistent, 🇰🇷 Korea-consistent, 🇲🇴 Oman-consistent, 🇷🇺 Russia-consistent, 🇸🇬 Singapore-consistent, 🇨🇳 Taiwan-consistent, 🇦🇺 Australia-consistent, 🇦🇷 Argentinaia-consistent, 🇫🇷 France-consistent, 🇩🇪 Germany-consistent, 🇳🇱 Netherlands-consistent, 🇹🇷 Turkey-consistent, 🇬🇧 United Kingdom-consistent, 🇨🇦 Canada-consistent, 🇺🇸 United States-consistent], icon: https://raw.githubusercontent.com/Orz-3/mini/master/Color/Global.png}
   # 节点查看
-  - {name: ✈️ All, type: select, include-all: true, filter: *filterAll, icon: https://fastly.jsdelivr.net/gh/Koolson/Qure@master/IconSet/Color/Airport.png}
+  - {name: ✈️ Free, type: select, include-all: true, filter: *filterAll, exclude-filter: "pay", icon: https://fastly.jsdelivr.net/gh/Koolson/Qure@master/IconSet/Color/Airport.png}
+  - {name: ✈️ Pay, type: select, include-all: true, filter: *filterAll, exclude-filter: "perm|temp", icon: https://fastly.jsdelivr.net/gh/Koolson/Qure@master/IconSet/Color/Airport.png}
+
+  # 模块化选择
+  - {name: 🚀 Proxy, type: select, proxies: [🌐 Other, 🇮🇳 India, 🇭🇰 Hong Kong, 🇯🇵 Japan, 🇰🇷 Korea, 🇲🇴 Oman, 🇷🇺 Russia, 🇸🇬 Singapore, 🇨🇳 Taiwan, 🇦🇺 Australia, 🇦🇷 Argentinaia, 🇫🇷 France, 🇩🇪 Germany, 🇮🇪 Ireland, 🇳🇱 Netherlands, 🇹🇷 Turkey, 🇬🇧 United Kingdom, 🇨🇦 Canada, 🇺🇸 United States, 🎯 Direct], icon: https://fastly.jsdelivr.net/gh/Koolson/Qure/IconSet/Color/Rocket.png}
+  - {name: 🇨🇳 Mainland China, <<: *select-direct, icon: https://fastly.jsdelivr.net/gh/Koolson/Qure@master/IconSet/Color/China.png}
+  # 兜底策略组
+  - {name: 🐟 漏网之鱼, <<: *select-direct, icon: https://fastly.jsdelivr.net/gh/Koolson/Qure@master/IconSet/Color/Final.png} 
+  # - {name: 🗺 Nation-urltest, <<: *select-test, proxies: [🌐 Other-urltest, 🇮🇳 India-urltest, 🇭🇰 Hong Kong-urltest, 🇯🇵 Japan-urltest, 🇰🇷 Korea-urltest, 🇲🇴 Oman-urltest, 🇷🇺 Russia-urltest, 🇸🇬 Singapore-urltest, 🇨🇳 Taiwan-urltest, 🇦🇺 Australia-urltest, 🇦🇷 Argentinaia-urltest, 🇫🇷 France-urltest, 🇩🇪 Germany-urltest, 🇮🇪 Ireland-urltest, 🇳🇱 Netherlands-urltest, 🇹🇷 Turkey-urltest, 🇬🇧 United Kingdom-urltest, 🇨🇦 Canada-urltest, 🇺🇸 United States-urltest], icon: https://raw.githubusercontent.com/Orz-3/mini/master/Color/Global.png}
+  # - {name: 🗺 Nation-roundrobin, <<: *select-test, proxies: [🌐 Other-roundrobin, 🇮🇳 India-roundrobin, 🇭🇰 Hong Kong-roundrobin, 🇯🇵 Japan-roundrobin, 🇰🇷 Korea-roundrobin, 🇲🇴 Oman-roundrobin, 🇷🇺 Russia-roundrobin, 🇸🇬 Singapore-roundrobin, 🇨🇳 Taiwan-roundrobin, 🇦🇺 Australia-roundrobin, 🇦🇷 Argentinaia-roundrobin, 🇫🇷 France-roundrobin, 🇩🇪 Germany-roundrobin, 🇳🇱 Netherlands-roundrobin, 🇹🇷 Turkey-roundrobin, 🇬🇧 United Kingdom-roundrobin, 🇨🇦 Canada-roundrobin, 🇺🇸 United States-roundrobin], icon: https://raw.githubusercontent.com/Orz-3/mini/master/Color/Global.png}
+  # - {name: 🗺 Nation-consistent, <<: *select-test, proxies: [🌐 Other-consistent, 🇮🇳 India-consistent, 🇭🇰 Hong Kong-consistent, 🇯🇵 Japan-consistent, 🇰🇷 Korea-consistent, 🇲🇴 Oman-consistent, 🇷🇺 Russia-consistent, 🇸🇬 Singapore-consistent, 🇨🇳 Taiwan-consistent, 🇦🇺 Australia-consistent, 🇦🇷 Argentinaia-consistent, 🇫🇷 France-consistent, 🇩🇪 Germany-consistent, 🇳🇱 Netherlands-consistent, 🇹🇷 Turkey-consistent, 🇬🇧 United Kingdom-consistent, 🇨🇦 Canada-consistent, 🇺🇸 United States-consistent], icon: https://raw.githubusercontent.com/Orz-3/mini/master/Color/Global.png}
+
+  # select策略组
+  - {name: 🌐 Other, <<: *select-test, proxies: [🌐 Other-urltest, 🌐 Other-roundrobin, 🌐 Other-consistent], include-all: true, filter: *filterOther, icon: https://fastly.jsdelivr.net/gh/Koolson/Qure@master/IconSet/Color/Airport.png}
+  - {name: 🇮🇳 India, <<: *select-test, proxies: [🇮🇳 India-urltest, 🇮🇳 India-roundrobin, 🇮🇳 India-consistent], include-all: true, filter: *filterIN, icon: https://raw.githubusercontent.com/lipis/flag-icons/main/flags/1x1/in.svg}
+  ## Asia(亚洲)
+  - {name: 🇭🇰 Hong Kong, <<: *select-test, proxies: [🇭🇰 Hong Kong-urltest, 🇭🇰 Hong Kong-roundrobin, 🇭🇰 Hong Kong-consistent], include-all: true, filter: *filterHK, icon: https://raw.githubusercontent.com/lipis/flag-icons/main/flags/1x1/hk.svg}
+  - {name: 🇯🇵 Japan, <<: *select-test, proxies: [🇯🇵 Japan-urltest, 🇯🇵 Japan-roundrobin, 🇯🇵 Japan-consistent], include-all: true, filter: *filterJP, icon: https://raw.githubusercontent.com/lipis/flag-icons/main/flags/1x1/jp.svg}
+  - {name: 🇰🇷 Korea, <<: *select-test, proxies: [🇰🇷 Korea-urltest, 🇰🇷 Korea-roundrobin, 🇰🇷 Korea-consistent], include-all: true, filter: *filterKR, icon: https://raw.githubusercontent.com/lipis/flag-icons/main/flags/1x1/kr.svg}
+  - {name: 🇲🇴 Oman, <<: *select-test, proxies: [🇲🇴 Oman-urltest, 🇲🇴 Oman-roundrobin, 🇲🇴 Oman-consistent], include-all: true, filter: *filterMO, icon: https://raw.githubusercontent.com/lipis/flag-icons/main/flags/1x1/mo.svg}
+  - {name: 🇷🇺 Russia, <<: *select-test, proxies: [🇷🇺 Russia-urltest, 🇷🇺 Russia-roundrobin, 🇷🇺 Russia-consistent], include-all: true, filter: *filterRU, icon: https://raw.githubusercontent.com/lipis/flag-icons/main/flags/1x1/ru.svg}
+  - {name: 🇸🇬 Singapore, <<: *select-test, proxies: [🇸🇬 Singapore-urltest, 🇸🇬 Singapore-roundrobin, 🇸🇬 Singapore-consistent], include-all: true, filter: *filterSG, icon: https://raw.githubusercontent.com/lipis/flag-icons/main/flags/1x1/sg.svg}
+  - {name: 🇨🇳 Taiwan, <<: *select-test, proxies: [🇨🇳 Taiwan-urltest, 🇨🇳 Taiwan-roundrobin, 🇨🇳 Taiwan-consistent], include-all: true, filter: *filterTW, icon: https://raw.githubusercontent.com/lipis/flag-icons/main/flags/1x1/tw.svg}
+  ## Australia
+  - {name: 🇦🇺 Australia, <<: *select-test, proxies: [🇦🇺 Australia-urltest, 🇦🇺 Australia-roundrobin, 🇦🇺 Australia-consistent], include-all: true, filter: *filterAU, icon: https://raw.githubusercontent.com/lipis/flag-icons/main/flags/1x1/au.svg}
+  ## Europe(欧洲)
+  - {name: 🇦🇷 Argentinaia, <<: *select-test, proxies: [🇦🇷 Argentinaia-urltest, 🇦🇷 Argentinaia-roundrobin, 🇦🇷 Argentinaia-consistent], include-all: true, filter: *filterAR, icon: https://raw.githubusercontent.com/lipis/flag-icons/main/flags/1x1/ar.svg}
+  - {name: 🇫🇷 France, <<: *select-test, proxies: [🇫🇷 France-urltest, 🇫🇷 France-roundrobin, 🇫🇷 France-consistent], include-all: true, filter: *filterFR, icon: https://raw.githubusercontent.com/lipis/flag-icons/main/flags/1x1/fr.svg}
+  - {name: 🇩🇪 Germany, <<: *select-test, proxies: [🇩🇪 Germany-urltest, 🇩🇪 Germany-roundrobin, 🇩🇪 Germany-consistent], include-all: true, filter: *filterDE, icon: https://raw.githubusercontent.com/lipis/flag-icons/main/flags/1x1/de.svg}
+  - {name: 🇮🇪 Ireland, <<: *select-test, proxies: [🇮🇪 Ireland-urltest, 🇮🇪 Ireland-roundrobin, 🇮🇪 Ireland-consistent], include-all: true, filter: *filterIE, icon: https://raw.githubusercontent.com/lipis/flag-icons/main/flags/1x1/ie.svg}
+  - {name: 🇳🇱 Netherlands, <<: *select-test, proxies: [🇳🇱 Netherlands-urltest, 🇳🇱 Netherlands-roundrobin, 🇳🇱 Netherlands-consistent], include-all: true, filter: *filterNL, icon: https://raw.githubusercontent.com/lipis/flag-icons/main/flags/1x1/nl.svg}
+  - {name: 🇹🇷 Turkey, <<: *select-test, proxies: [🇹🇷 Turkey-urltest, 🇹🇷 Turkey-roundrobin, 🇹🇷 Turkey-consistent], include-all: true, filter: *filterTR, icon: https://raw.githubusercontent.com/lipis/flag-icons/main/flags/1x1/tr.svg}
+  - {name: 🇬🇧 United Kingdom, <<: *select-test, proxies: [🇬🇧 United Kingdom-urltest, 🇬🇧 United Kingdom-roundrobin, 🇬🇧 United Kingdom-consistent], include-all: true, filter: *filterUK, icon: https://raw.githubusercontent.com/lipis/flag-icons/main/flags/1x1/gb.svg}
+  ## North America(北美洲)
+  - {name: 🇨🇦 Canada, <<: *select-test, proxies: [🇨🇦 Canada-urltest, 🇨🇦 Canada-roundrobin, 🇨🇦 Canada-consistent], include-all: true, filter: *filterCA, icon: https://raw.githubusercontent.com/lipis/flag-icons/main/flags/1x1/ca.svg}
+  - {name: 🇺🇸 United States, <<: *select-test, proxies: [🇺🇸 United States-urltest, 🇺🇸 United States-roundrobin, 🇺🇸 United States-consistent], include-all: true, filter: *filterUS, icon: https://raw.githubusercontent.com/lipis/flag-icons/main/flags/1x1/us.svg}
 
   # ----------------功能策略组--------------------
   # 混合
   # 服务平台
+  ## 直连软件
+  - {name: 🎯 Application, <<: *select-direct, icon: https://fastly.jsdelivr.net/gh/Koolson/Qure@master/IconSet/Color/Direct.png}
   ## 支付服务
   - {name: 💴 PayPal, <<: *select-direct, icon: https://fastly.jsdelivr.net/gh/Koolson/Qure@master/IconSet/Color/PayPal.png}
   ## 代理托管平台
@@ -280,30 +315,6 @@ proxy-groups:
   - {name: 🎯 Direct, type: select, proxies: [DIRECT], icon: https://fastly.jsdelivr.net/gh/Koolson/Qure@master/IconSet/Color/Direct.png}
   
   # ----------------节点测试--------------------
-  # select策略组
-  - {name: 🇮🇳 India, type: select, proxies: [🇮🇳 India-urltest, 🇮🇳 India-roundrobin, 🇮🇳 India-consistent], include-all: true, filter: *filterIN, icon: https://raw.githubusercontent.com/lipis/flag-icons/main/flags/1x1/in.svg}
-  ## Asia(亚洲)
-  - {name: 🇭🇰 Hong Kong, type: select, proxies: [🇭🇰 Hong Kong-urltest, 🇭🇰 Hong Kong-roundrobin, 🇭🇰 Hong Kong-consistent], include-all: true, filter: *filterHK, icon: https://raw.githubusercontent.com/lipis/flag-icons/main/flags/1x1/hk.svg}
-  - {name: 🇯🇵 Japan, type: select, proxies: [🇯🇵 Japan-urltest, 🇯🇵 Japan-roundrobin, 🇯🇵 Japan-consistent], include-all: true, filter: *filterJP, icon: https://raw.githubusercontent.com/lipis/flag-icons/main/flags/1x1/jp.svg}
-  - {name: 🇰🇷 Korea, type: select, proxies: [🇰🇷 Korea-urltest, 🇰🇷 Korea-roundrobin, 🇰🇷 Korea-consistent], include-all: true, filter: *filterKR, icon: https://raw.githubusercontent.com/lipis/flag-icons/main/flags/1x1/kr.svg}
-  - {name: 🇲🇴 Oman, type: select, proxies: [🇲🇴 Oman-urltest, 🇲🇴 Oman-roundrobin, 🇲🇴 Oman-consistent], include-all: true, filter: *filterMO, icon: https://raw.githubusercontent.com/lipis/flag-icons/main/flags/1x1/mo.svg}
-  - {name: 🇷🇺 Russia, type: select, proxies: [🇷🇺 Russia-urltest, 🇷🇺 Russia-roundrobin, 🇷🇺 Russia-consistent], include-all: true, filter: *filterRU, icon: https://raw.githubusercontent.com/lipis/flag-icons/main/flags/1x1/ru.svg}
-  - {name: 🇸🇬 Singapore, type: select, proxies: [🇸🇬 Singapore-urltest, 🇸🇬 Singapore-roundrobin, 🇸🇬 Singapore-consistent], include-all: true, filter: *filterSG, icon: https://raw.githubusercontent.com/lipis/flag-icons/main/flags/1x1/sg.svg}
-  - {name: 🇨🇳 Taiwan, type: select, proxies: [🇨🇳 Taiwan-urltest, 🇨🇳 Taiwan-roundrobin, 🇨🇳 Taiwan-consistent], include-all: true, filter: *filterTW, icon: https://raw.githubusercontent.com/lipis/flag-icons/main/flags/1x1/tw.svg}
-  ## Australia
-  - {name: 🇦🇺 Australia, type: select, proxies: [🇦🇺 Australia-urltest, 🇦🇺 Australia-roundrobin, 🇦🇺 Australia-consistent], include-all: true, filter: *filterAU, icon: https://raw.githubusercontent.com/lipis/flag-icons/main/flags/1x1/au.svg}
-  ## Europe(欧洲)
-  - {name: 🇦🇷 Argentinaia, type: select, proxies: [🇦🇷 Argentinaia-urltest, 🇦🇷 Argentinaia-roundrobin, 🇦🇷 Argentinaia-consistent], include-all: true, filter: *filterAR, icon: https://raw.githubusercontent.com/lipis/flag-icons/main/flags/1x1/ar.svg}
-  - {name: 🇫🇷 France, type: select, proxies: [🇫🇷 France-urltest, 🇫🇷 France-roundrobin, 🇫🇷 France-consistent], include-all: true, filter: *filterFR, icon: https://raw.githubusercontent.com/lipis/flag-icons/main/flags/1x1/fr.svg}
-  - {name: 🇩🇪 Germany, type: select, proxies: [🇩🇪 Germany-urltest, 🇩🇪 Germany-roundrobin, 🇩🇪 Germany-consistent], include-all: true, filter: *filterDE, icon: https://raw.githubusercontent.com/lipis/flag-icons/main/flags/1x1/de.svg}
-  - {name: 🇮🇪 Ireland, type: select, proxies: [🇮🇪 Ireland-urltest, 🇮🇪 Ireland-roundrobin, 🇮🇪 Ireland-consistent], include-all: true, filter: *filterIE, icon: https://raw.githubusercontent.com/lipis/flag-icons/main/flags/1x1/ie.svg}
-  - {name: 🇳🇱 Netherlands, type: select, proxies: [🇳🇱 Netherlands-urltest, 🇳🇱 Netherlands-roundrobin, 🇳🇱 Netherlands-consistent], include-all: true, filter: *filterNL, icon: https://raw.githubusercontent.com/lipis/flag-icons/main/flags/1x1/nl.svg}
-  - {name: 🇹🇷 Turkey, type: select, proxies: [🇹🇷 Turkey-urltest, 🇹🇷 Turkey-roundrobin, 🇹🇷 Turkey-consistent], include-all: true, filter: *filterTR, icon: https://raw.githubusercontent.com/lipis/flag-icons/main/flags/1x1/tr.svg}
-  - {name: 🇬🇧 United Kingdom, type: select, proxies: [🇬🇧 United Kingdom-urltest, 🇬🇧 United Kingdom-roundrobin, 🇬🇧 United Kingdom-consistent], include-all: true, filter: *filterUK, icon: https://raw.githubusercontent.com/lipis/flag-icons/main/flags/1x1/gb.svg}
-  ## North America(北美洲)
-  - {name: 🇨🇦 Canada, type: select, proxies: [🇨🇦 Canada-urltest, 🇨🇦 Canada-roundrobin, 🇨🇦 Canada-consistent], include-all: true, filter: *filterCA, icon: https://raw.githubusercontent.com/lipis/flag-icons/main/flags/1x1/ca.svg}
-  - {name: 🇺🇸 United States, type: select, proxies: [🇺🇸 United States-urltest, 🇺🇸 United States-roundrobin, 🇺🇸 United States-consistent], include-all: true, filter: *filterUS, icon: https://raw.githubusercontent.com/lipis/flag-icons/main/flags/1x1/us.svg}
-
   # urltest策略组
   - {name: 🌐 Other-urltest, <<: *urltest, filter: *filterOther, icon: https://www.clashverge.dev/assets/icons/speed.svg}
   ## Africa(非洲)
@@ -402,20 +413,15 @@ rule-anchor:
 rule-providers:
   # ----------------直连--------------------
   # 工具
-  ## 外部控制
-  externalcontrol:
-    <<: *classical-yaml
-    path: ./provider/ruleset/externalcontrol.yaml
-    url: "https://raw.githubusercontent.com/nekohalawrence/PCR/main/rule/mihomo/externalcontrol-classical.yaml"
+  lancidr:
+    <<: *ip-mrs
+    path: ./provider/ruleset/lancidr.mrs
+    url: "https://github.com/xixu-me/RFM/raw/basic/lancidr.mrs"
   ## 本地网络
   private:
     <<: *domain-mrs
     path: ./provider/ruleset/private.mrs
-    url: "https://raw.githubusercontent.com/DustinWin/ruleset_geodata/mihomo-ruleset/private.mrs"
-  privateip:
-    <<: *ip-mrs
-    path: ./provider/ruleset/privateip.mrs
-    url: "https://raw.githubusercontent.com/DustinWin/ruleset_geodata/mihomo-ruleset/privateip.mrs"
+    url: "https://github.com/xixu-me/RFM/raw/basic/private.mrs"
   ## fakeip-filter
   fakeip-filter:
     <<: *domain-mrs
@@ -426,6 +432,14 @@ rule-providers:
     <<: *classical-yaml
     path: ./provider/ruleset/applications.yaml
     url: "https://raw.githubusercontent.com/xixu-me/RFM/basic/applications.yaml"
+  applications-android:
+    <<: *classical-yaml
+    path: ./provider/ruleset/applications-android.yaml
+    url: "https://raw.githubusercontent.com/nekohalawrence/PCR/main/rule/mihomo/applications-android-classical.yaml"
+  applications-windows:
+    <<: *classical-yaml
+    path: ./provider/ruleset/applications-windows.yaml
+    url: "https://raw.githubusercontent.com/nekohalawrence/PCR/main/rule/mihomo/applications-windows-classical.yaml"
   # 服务平台
   ## Google 服务
   # google@cn:
@@ -507,6 +521,11 @@ rule-providers:
     url: "https://github.com/DustinWin/ruleset_geodata/raw/mihomo-ruleset/gamesip.mrs"
     
   # ----------------代理--------------------
+  ## 外部控制
+  externalcontrol:
+    <<: *domain-yaml
+    path: ./provider/ruleset/externalcontrol.yaml
+    url: "https://raw.githubusercontent.com/nekohalawrence/PCR/main/rule/mihomo/externalcontrol-domain.yaml"
   # 服务平台
   ## 网络服务
   cloudflare:
@@ -514,10 +533,10 @@ rule-providers:
     path: ./provider/ruleset/cloudflare.mrs
     url: "https://github.com/xixu-me/RFM/raw/universal/cloudflare.mrs"
   ## 人工智能
-  gemini:
-    <<: *classical-yaml
-    path: ./provider/ruleset/gemini.yaml
-    url: "https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Clash/Gemini/Gemini_No_Resolve.yaml"
+  google-gemini:
+    <<: *domain-mrs
+    path: ./provider/ruleset/google-gemini.mrs
+    url: "https://github.com/xixu-me/RFM/raw/refs/heads/universal/google-gemini.mrs"
   aiglobal:
     <<: *domain-mrs
     path: ./provider/ruleset/aiglobal.mrs
@@ -610,6 +629,10 @@ rule-providers:
     <<: *ip-mrs
     path: ./provider/ruleset/mediaip.mrs
     url: "https://github.com/DustinWin/ruleset_geodata/raw/mihomo-ruleset/mediaip.mrs"
+  gfw:
+    <<: *domain-mrs
+    path: ./provider/ruleset/gfw.mrs
+    url: "https://github.com/DustinWin/ruleset_geodata/raw/mihomo-ruleset/gfw.mrs"
   proxy:
     <<: *domain-mrs
     path: ./provider/ruleset/proxy.mrs
@@ -633,32 +656,31 @@ rule-providers:
 rules:
   # ----------------直连--------------------
   # 本地网络
+  - RULE-SET,lancidr,🎯 Direct,no-resolve
   - RULE-SET,private,🎯 Direct
-  - RULE-SET,privateip,🎯 Direct,no-resolve
   # 工具平台
-  ## 外部控制
-  - RULE-SET,externalcontrol,🎯 Direct
   # 服务平台
   ## CDN 服务和代理加速服务
-  - RULE-SET,fastly,🎯 Direct
-  - RULE-SET,jsdelivr,🎯 Direct
-  - RULE-SET,githubproxy,🎯 Direct
-  ## 直连软件
-  - RULE-SET,applications,🎯 Direct
+  - RULE-SET,fastly,🇨🇳 Mainland China
+  - RULE-SET,jsdelivr,🇨🇳 Mainland China
+  - RULE-SET,githubproxy,🇨🇳 Mainland China
   ## Google 服务，大部分时间不可用
-  # - RULE-SET,google@cn,🎯 Direct
+  # - RULE-SET,google@cn,🇨🇳 Mainland China
   ## 苹果服务
-  - RULE-SET,apple@cn,🎯 Direct
+  - RULE-SET,apple@cn,🇨🇳 Mainland China
   ## 微软服务
-  - RULE-SET,microsoft@cn,🎯 Direct
+  - RULE-SET,microsoft@cn,🇨🇳 Mainland China
   # 娱乐平台
-  - RULE-SET,steam@cn,🎯 Direct
-  - RULE-SET,game@cn,🎯 Direct
+  - RULE-SET,steam@cn,🇨🇳 Mainland China
+  - RULE-SET,game@cn,🇨🇳 Mainland China
   # 漏网之鱼
-  - RULE-SET,cnlite,🎯 Direct
+  - RULE-SET,cnlite,🇨🇳 Mainland China
 
   # ----------------混合--------------------
-  - DOMAIN-SUFFIX,steamcommunity.com,🚀 Proxy
+  # 直连软件
+  - RULE-SET,applications-android,🎯 Application
+  - RULE-SET,applications-windows,🎯 Application
+  - RULE-SET,applications,🎯 Application
   # 服务平台
   - RULE-SET,cloudflare,☁ Cloudflare
   ## 支付服务
@@ -672,9 +694,11 @@ rules:
   - RULE-SET,gameglobalip,🎮 GameGlobal,no-resolve
 
   # ----------------代理--------------------
+  ## 外部控制
+  - RULE-SET,externalcontrol,🚀 Proxy
   # 服务平台
   ## 人工智能
-  - RULE-SET,gemini,🤖 AI
+  - RULE-SET,google-gemini,🤖 AI
   - RULE-SET,aiglobal,🤖 AI
   # 社交通讯平台
   - RULE-SET,telegram,🚀 Proxy
@@ -708,8 +732,8 @@ rules:
   - RULE-SET,proxy,🚀 Proxy
   - RULE-SET,tld-proxy,🚀 Proxy
   # 综合国内直连
-  - RULE-SET,cn,🎯 Direct
-  - RULE-SET,cnip,🎯 Direct,no-resolve
+  - RULE-SET,cn,🇨🇳 Mainland China
+  # - RULE-SET,cnip,🇨🇳 Mainland China,no-resolve
 
   # ----------------兜底规则--------------------
   - MATCH,🐟 漏网之鱼
