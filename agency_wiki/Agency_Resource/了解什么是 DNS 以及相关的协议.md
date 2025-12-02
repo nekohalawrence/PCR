@@ -1,8 +1,10 @@
 ---
 Created date: 2025-02-07 00:41
-Modified date: 2025-11-12 13:09
+Modified date: 2025-12-02 13:16
 ---
 # 了解什么是 DNS 以及相关的协议
+
+> [浅谈在代理环境中的 DNS 解析行为](https://blog.skk.moe/post/what-happend-to-dns-in-proxy/#Ru-Guo-Cao-Zuo-Xi-Tong-Huo-Zhe-Liu-Lan-Qi-Huan-Cun-Liao-DNS-Jie-Xi-Jie-Guo)
 
 - 如果你不想折腾（DNS 分流），用默认配置就可以了，使用运营商的 DNS 服务最快，如果 DNS 污染非常严重时再换公共 DNS。
 

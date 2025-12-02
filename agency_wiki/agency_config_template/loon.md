@@ -1,6 +1,6 @@
 ---
 Created date: 2025-02-07 00:41
-Modified date: 2025-11-18 21:09
+Modified date: 2025-12-02 13:27
 ---
 # loon
 
@@ -29,3 +29,4 @@ https://raw.githubusercontent.com/nekohalawrence/PCR/main/config/loon/loon-test.
 | [ProxyResource - luestr](https://github.com/luestr/ProxyResource/tree/main/Tool/Loon/Lcf/zh-CN)      | https://raw.githubusercontent.com/luestr/ProxyResource/refs/heads/main/Tool/Loon/Lcf/zh-CN/Loon_Sample_Configuration_By_iKeLee.lcf          | [可莉🅥](https://t.me/iKeLee) |
 | [Quan_Shado_Conf - SANYIMOE](https://github.com/SANYIMOE/Quan_Shado_Conf/blob/master/conf/loon.conf) | https://raw.githubusercontent.com/SANYIMOE/Quan_Shado_Conf/refs/heads/master/conf/loon.conf                                                 |                             |
 | [Tool - Repcz](https://github.com/Repcz/Tool/tree/X/Loon)                                            | https://raw.githubusercontent.com/Repcz/Tool/refs/heads/X/Loon/Loon.conf                                                                    |                             |
+| [wool_scripts](https://github.com/fmz200/wool_scripts)                                               | https://raw.githubusercontent.com/fmz200/wool_scripts/refs/heads/main/Loon/config/Loon.conf                                                 |                             |
