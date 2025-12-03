@@ -1,6 +1,6 @@
 ---
 Created date: 2025-02-07 00:41
-Modified date: 2025-11-22 16:42
+Modified date: 2025-12-02 16:50
 ---
 # AgencyTools
 
@@ -15,6 +15,8 @@ Modified date: 2025-11-22 16:42
 | [Xray-core](https://github.com/XTLS/Xray-core)              |     | [文档教程 Project X](https://xtls.github.io/)         |
 
 ## GUI
+
+> [代理工具箱 Toolbox](https://www.haitunt.org/app.html#android)
 
 ### 软件
 

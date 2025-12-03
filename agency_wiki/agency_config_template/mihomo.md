@@ -1,6 +1,6 @@
 ---
 Created date: 2025-02-07 00:41
-Modified date: 2025-11-18 21:04
+Modified date: 2025-12-02 16:44
 ---
 # mihomo
 
@@ -9,14 +9,12 @@ Modified date: 2025-11-18 21:04
 - 配置的是 mihomo 内核, 需要自己配置订阅链接。
 
 ```
-https://raw.githubusercontent.com/nekohalawrence/PCR/main/config/mihomo-stable.yaml
-```
-
-```
-https://raw.githubusercontent.com/nekohalawrence/PCR/main/config/mihomo-test.yaml
+https://raw.githubusercontent.com/nekohalawrence/PCR/main/config/mihomo.yaml
 ```
 
 ## reference
+
+> [Template4Clash](https://github.com/LennoC/Template4Clash), [mihomo_yamls](https://github.com/HenryChiao/mihomo_yamls)  
 
 | 项目名称                                                                                  | 配置链接                                                                                                             |
 | ------------------------------------------------------------------------------------- | ---------------------------------------------------------------------------------------------------------------- |
