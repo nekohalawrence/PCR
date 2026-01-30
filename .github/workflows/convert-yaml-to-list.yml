@@ -1,19 +1,20 @@
 name: Convert Rules YAML to LIST
 
 on:
-  workflow_dispatch:
+  workflow_dispatch: # 允许手动点击运行
   push:
     paths:
-      - 'rule/yaml/**.yaml'
-      - 'rule/yaml/**.yml'
-      # 修改点 1: 监控脚本新路径的变化
+      # 监控规则源文件的变化
+      - 'agency-resource/rule/yaml/**.yaml'
+      - 'agency-resource/rule/yaml/**.yml'
+      # 监控转换脚本的变化
       - '.github/scripts/convert_rules.py'
 
 jobs:
   convert:
     runs-on: ubuntu-latest
     permissions:
-      contents: write
+      contents: write # 赋予写权限以提交生成的 list 文件
 
     steps:
       - name: Checkout code
@@ -31,30 +32,36 @@ jobs:
 
       - name: Run Conversion Script
         env:
+          # 传递仓库信息给 Python 脚本 (例如: username/proxy-resource)
           GITHUB_REPOSITORY: ${{ github.repository }}
-        # 修改点 2: 指定脚本的新路径进行执行
+          # 传递分支名 (例如: main)
+          GITHUB_REF_NAME: ${{ github.ref_name }}
         run: |
+          # 指定脚本的相对路径
           SCRIPT_PATH=".github/scripts/convert_rules.py"
           
           if [ -f "$SCRIPT_PATH" ]; then
-             echo "Found script at $SCRIPT_PATH, executing..."
+             echo "Detected script at $SCRIPT_PATH, starting conversion..."
              python "$SCRIPT_PATH"
           else
-             echo "Error: Script not found at $SCRIPT_PATH"
+             echo "Error: Script file not found at $SCRIPT_PATH"
              exit 1
           fi
 
       - name: Commit and Push changes
         run: |
+          # 配置 Git 机器人身份
           git config --local user.email "github-actions[bot]@users.noreply.github.com"
           git config --local user.name "github-actions[bot]"
           
-          git add /rule/list/
+          # 添加生成的 list 目录
+          git add agency-resource/rule/list/
           
+          # 检查是否有实际变更
           if git diff --staged --quiet; then
-            echo "No changes to commit."
+            echo "No changes detected. Skipping commit."
           else
-            echo "Changes detected, committing..."
-            git commit -m "chore: auto-convert yaml rules to list format [skip ci]"
+            echo "Changes detected. Committing..."
+            git commit -m "chore: auto-convert yaml rules to list [skip ci]"
             git push
           fi
