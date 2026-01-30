@@ -1,0 +1,59 @@
+name: Convert Rules YAML to LIST
+
+on:
+  workflow_dispatch: # 允许手动触发
+  push:
+    paths:
+      - 'agency-resource/rule/yaml/**.yaml'
+      - 'agency-resource/rule/yaml/**.yml'
+      - 'convert_rules.py' # 脚本本身修改也触发
+
+jobs:
+  convert:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write # 需要写入权限来提交代码
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: '3.9'
+
+      - name: Install dependencies
+        run: |
+          python -m pip install --upgrade pip
+          pip install pyyaml
+
+      - name: Run Conversion Script
+        env:
+          GITHUB_REPOSITORY: ${{ github.repository }}
+        run: |
+          # 假设脚本放在根目录，如果放在其他地方请修改路径
+          # 例如: python .github/scripts/convert_rules.py
+          if [ -f "convert_rules.py" ]; then
+             python convert_rules.py
+          else
+             echo "Script convert_rules.py not found at root, please checking file location."
+             exit 1
+          fi
+
+      - name: Commit and Push changes
+        run: |
+          git config --local user.email "github-actions[bot]@users.noreply.github.com"
+          git config --local user.name "github-actions[bot]"
+          
+          # 添加生成的目标目录
+          git add agency-resource/rule/list/
+          
+          # 检查暂存区是否有变化
+          if git diff --staged --quiet; then
+            echo "No changes to commit."
+          else
+            echo "Changes detected, committing..."
+            git commit -m "chore: auto-convert yaml rules to list format [skip ci]"
+            git push
+          fi
