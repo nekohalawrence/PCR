@@ -35,7 +35,7 @@ jobs:
           # 假设脚本放在根目录，如果放在其他地方请修改路径
           # 例如: python .github/scripts/convert_rules.py
           if [ -f "convert_rules.py" ]; then
-             python convert_rules.py
+             python .github/scripts/convert_rules.py
           else
              echo "Script convert_rules.py not found at root, please checking file location."
              exit 1
