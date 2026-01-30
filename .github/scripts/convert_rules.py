@@ -4,8 +4,8 @@ import datetime
 import re
 
 # 配置
-SOURCE_DIR = 'agency-resource/rule/yaml'
-TARGET_DIR = 'agency-resource/rule/list'
+SOURCE_DIR = 'proxy-resource/rule/yaml'
+TARGET_DIR = 'proxy-resource/rule/list'
 REPO_NAME = os.environ.get('GITHUB_REPOSITORY', 'nekohalawrence/PCR') # 默认值用于本地测试
 BRANCH_NAME = 'main' # 假设主分支为 main
 
@@ -66,7 +66,7 @@ def generate_header(original_content, filename_no_ext, stats):
             
         # 更新 URL
         if stripped.startswith('# update_url:'):
-            new_url = f'https://raw.githubusercontent.com/{REPO_NAME}/{BRANCH_NAME}/agency-resource/rule/list/{filename_no_ext}.list'
+            new_url = f'https://raw.githubusercontent.com/{REPO_NAME}/{BRANCH_NAME}/proxy-resource/rule/list/{filename_no_ext}.list'
             new_header_lines.append(f'# update_url: {new_url}')
             has_update_url = True
             continue
@@ -79,7 +79,7 @@ def generate_header(original_content, filename_no_ext, stats):
     if not has_update_date:
         new_header_lines.append(f'# update_date: {today}')
     if not has_update_url:
-        new_url = f'https://raw.githubusercontent.com/{REPO_NAME}/{BRANCH_NAME}/agency-resource/rule/list/{filename_no_ext}.list'
+        new_url = f'https://raw.githubusercontent.com/{REPO_NAME}/{BRANCH_NAME}/proxy-resource/rule/list/{filename_no_ext}.list'
         new_header_lines.append(f'# update_url: {new_url}')
 
     # 插入新的统计块
