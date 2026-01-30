@@ -1,7 +1,8 @@
 ---
 Created date: 2025-02-07 00:41
-Modified date: 2025-11-09 18:50
+Modified date: 2026-01-30 10:03
 ---
+
 # mihomo
 
 > [配置教程](https://github.com/LaolunsiG/PCR/blob/main/Agency_Wiki/Agency_Config_Tutorial/mihomo%20%E9%85%8D%E7%BD%AE%E6%95%99%E7%A8%8B.md)，[配置模板](https://github.com/nekohalawrence/PCR/tree/main/config/mihomo)

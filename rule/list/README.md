@@ -1,20 +1,11 @@
 ---
 Created date: 2025-02-07 00:41
-Modified date: 2025-08-28 12:09
+Modified date: 2026-01-30 10:03
 ---
+
 # Shadowrocket
 
 - 规则支持 Shadowrocket,Loon,Surge 等 IOS 代理软件
-
-## 规则分类
-
-| 规则分类        | 介绍  |
-| ----------- | --- |
-| Airport     |     |
-| CDN         |     |
-| ChinaLite   |     |
-| GFWLite     |     |
-| MediaGlobal |     |
 
 ## reference
 
