@@ -1,21 +1,21 @@
 # name: githubproxy
 # content: 
-# update_date: 20251109
-# update_url: https://raw.githubusercontent.com/nekohalawrence/PCR/main/rule/Shadowrocket/githubproxy-domain.list
-# repo: https://github.com/nekohalawrence/PCR/tree/main/rule/shadowrocket
+# update_date: 20260130
+# update_url: https://raw.githubusercontent.com/nekohalawrence/proxy-resource/main/rule/list/githubproxy-domain.list
+# repo: https://github.com/nekohalawrence/proxy-resource/tree/main/rule/list
 
-# DOMAIN: 
+# DOMAIN: 3
 
-mirror.ghproxy.com
-cf.ghproxy.cc
-gh-proxy.com
-gh.ddlc.top
-gh.api.99988866.xyz
-kkgithub.com
-githubfast.com
-github.hscsec.cn
-521github.com
-gitclone.com
-ghfast.top
-ghgo.xyz
-ghproxy.link
+"mirror.ghproxy.com"
+"cf.ghproxy.cc"
+"gh-proxy.com"
+"gh.ddlc.top"
+"gh.api.99988866.xyz"
+"kkgithub.com"
+"githubfast.com"
+"github.hscsec.cn"
+"521github.com"
+"gitclone.com"
+"ghfast.top"
+"ghgo.xyz"
+"ghproxy.link"

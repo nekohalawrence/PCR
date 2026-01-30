@@ -4,9 +4,8 @@ on:
   workflow_dispatch:
   push:
     paths:
-      - 'agency-resource/rule/yaml/**.yaml'
-      - 'agency-resource/rule/yaml/**.yml'
-      # 修改点 1: 监控脚本新路径的变化
+      - 'rule/yaml/**.yaml'
+      - 'rule/yaml/**.yml'
       - '.github/scripts/convert_rules.py'
 
 jobs:
@@ -32,12 +31,10 @@ jobs:
       - name: Run Conversion Script
         env:
           GITHUB_REPOSITORY: ${{ github.repository }}
-        # 修改点 2: 指定脚本的新路径进行执行
+          GITHUB_REF_NAME: ${{ github.ref_name }}
         run: |
           SCRIPT_PATH=".github/scripts/convert_rules.py"
-          
           if [ -f "$SCRIPT_PATH" ]; then
-             echo "Found script at $SCRIPT_PATH, executing..."
              python "$SCRIPT_PATH"
           else
              echo "Error: Script not found at $SCRIPT_PATH"
@@ -49,12 +46,15 @@ jobs:
           git config --local user.email "github-actions[bot]@users.noreply.github.com"
           git config --local user.name "github-actions[bot]"
           
-          git add agency-resource/rule/list/
+          # 添加生成的 list 文件
+          git add rule/list/
+          # 同时也添加更新后的 yaml 源文件（因为统计信息和 repo 链接更新了）
+          git add rule/yaml/
           
           if git diff --staged --quiet; then
-            echo "No changes to commit."
+            echo "No changes detected."
           else
             echo "Changes detected, committing..."
-            git commit -m "chore: auto-convert yaml rules to list format [skip ci]"
+            git commit -m "chore: update rules stats, urls and list files [skip ci]"
             git push
           fi

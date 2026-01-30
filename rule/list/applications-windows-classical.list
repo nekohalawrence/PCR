@@ -1,8 +1,8 @@
 # name: applications-windows-classical
 # content: 这个规则用于收集一些Windows平台下常见的应用程序域名，方便用户根据需要进行分流设置。
 # update_date: 20260130
-# update_url: https://raw.githubusercontent.com/nekohalawrence/proxy-resource/main/rule/yaml/applications-windows-classical.yaml
-# repo: https://github.com/nekohalawrence/proxy-resource/tree/main/rule/yaml
+# update_url: https://raw.githubusercontent.com/nekohalawrence/proxy-resource/main/rule/list/applications-windows-classical.list
+# repo: https://github.com/nekohalawrence/proxy-resource/tree/main/rule/list
 
 # DOMAIN
 # DOMAIN-SUFFIX
@@ -13,5 +13,4 @@
 
 # 规则计数
 # PROCESS-NAME: 1
-payload:
-  - PROCESS-NAME,DingTalk.exe
+PROCESS-NAME,DingTalk.exe

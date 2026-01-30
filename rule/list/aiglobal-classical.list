@@ -1,19 +1,20 @@
 # name: aiglobal
-# content: 
-# update_date: 20250422
-# update_url: https://raw.githubusercontent.com/nekohalawrence/PCR/main/rule/list/aiglobal-classical.list
-# repo: https://github.com/nekohalawrence/PCR/tree/main/rule/list
+# content: 这个规则用于收集AI相关的域名和IP地址，涵盖了OpenAI、BardAI和Copilot等主要AI服务提供商的相关资源。通过使用此规则，可以确保访问这些AI服务时的网络连接顺畅，避免因网络限制而影响使用体验。
+# update_date: 20260130
+# update_url: https://raw.githubusercontent.com/nekohalawrence/proxy-resource/main/rule/list/aiglobal-classical.list
+# repo: https://github.com/nekohalawrence/proxy-resource/tree/main/rule/list
+
 
 # 包含的规则
 # OpenAI
-# Copilot
+# BardAI
 
 # 规则计数
-# DOMAIN: 
-# DOMAIN-SUFFIX: 
-# DOMAIN-KEYWORD: 
-# IP-CIDR: 
-
+# DOMAIN: 12
+# DOMAIN-KEYWORD: 1
+# DOMAIN-SUFFIX: 30
+# IP-ASN: 1
+# IP-CIDR: 2
 # OpenAI
 DOMAIN,browser-intake-datadoghq.com
 DOMAIN,chat.openai.com.cdn.cloudflare.net
@@ -51,7 +52,6 @@ DOMAIN-KEYWORD,openai
 IP-CIDR,24.199.123.28/32,no-resolve
 IP-CIDR,64.23.132.171/32,no-resolve
 IP-ASN,20473,no-resolve
-
 # BardAI
 DOMAIN,ai.google.dev
 DOMAIN,alkalimakersuite-pa.clients6.google.com
@@ -63,54 +63,3 @@ DOMAIN-SUFFIX,deepmind.google
 DOMAIN-SUFFIX,gemini.google.com
 DOMAIN-SUFFIX,generativeai.google
 DOMAIN-SUFFIX,proactivebackend-pa.googleapis.com
-
-# 微软 AI（copilot）
-DOMAIN,api.msn.com
-DOMAIN,api.statsig.com
-DOMAIN,assets.msn.com
-DOMAIN,browser-intake-datadoghq.com
-DOMAIN,chat.openai.com.cdn.cloudflare.net
-DOMAIN,copilot.microsoft.com
-DOMAIN,gateway.bingviz.microsoft.net
-DOMAIN,gateway.bingviz.microsoftapp.net
-DOMAIN,in.appcenter.ms
-DOMAIN,location.microsoft.com
-DOMAIN,odc.officeapps.live.com
-DOMAIN,openai-api.arkoselabs.com
-DOMAIN,openaicomproductionae4b.blob.core.windows.net
-DOMAIN,production-openaicom-storage.azureedge.net
-DOMAIN,r.bing.com
-DOMAIN,self.events.data.microsoft.com
-DOMAIN,services.bingapis.com
-DOMAIN,static.cloudflareinsights.com
-DOMAIN,sydney.bing.com
-DOMAIN,www.bing.com
-DOMAIN-SUFFIX,algolia.net
-DOMAIN-SUFFIX,api.microsoftapp.net
-DOMAIN-SUFFIX,auth0.com
-DOMAIN-SUFFIX,bing-shopping.microsoft-falcon.io
-DOMAIN-SUFFIX,challenges.cloudflare.com
-DOMAIN-SUFFIX,chatgpt.com
-DOMAIN-SUFFIX,chatgpt.livekit.cloud
-DOMAIN-SUFFIX,client-api.arkoselabs.com
-DOMAIN-SUFFIX,edgeservices.bing.com
-DOMAIN-SUFFIX,events.statsigapi.net
-DOMAIN-SUFFIX,featuregates.org
-DOMAIN-SUFFIX,host.livekit.cloud
-DOMAIN-SUFFIX,identrust.com
-DOMAIN-SUFFIX,intercom.io
-DOMAIN-SUFFIX,intercomcdn.com
-DOMAIN-SUFFIX,launchdarkly.com
-DOMAIN-SUFFIX,oaistatic.com
-DOMAIN-SUFFIX,oaiusercontent.com
-DOMAIN-SUFFIX,observeit.net
-DOMAIN-SUFFIX,openai.com
-DOMAIN-SUFFIX,openaiapi-site.azureedge.net
-DOMAIN-SUFFIX,openaicom.imgix.net
-DOMAIN-SUFFIX,segment.io
-DOMAIN-SUFFIX,sentry.io
-DOMAIN-SUFFIX,stripe.com
-DOMAIN-SUFFIX,turn.livekit.cloud
-DOMAIN-KEYWORD,openaicom-api
-IP-CIDR,24.199.123.28/32,no-resolve
-IP-CIDR,64.23.132.171/32,no-resolve

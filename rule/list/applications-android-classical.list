@@ -1,0 +1,18 @@
+# name: applications-android-classical
+# content: Android 常用应用直连规则
+# update_date: 20260130
+# update_url: https://raw.githubusercontent.com/nekohalawrence/proxy-resource/main/rule/list/applications-android-classical.list
+# repo: https://github.com/nekohalawrence/proxy-resource/tree/main/rule/list
+
+# DOMAIN
+# DOMAIN-SUFFIX
+# DOMAIN-KEYWORD
+# IP-CIDR
+
+
+
+# 规则计数
+# PROCESS-NAME: 3
+PROCESS-NAME,com.eg.android.AlipayGphone
+PROCESS-NAME,com.ss.android.ugc.aweme
+PROCESS-NAME,com.tencent.mm

@@ -1,7 +1,7 @@
 # name: telegram
-# update_date: 20251109
-# update_url: https://raw.githubusercontent.com/nekohalawrence/PCR/main/rule/mihomo/telegram-classical.yaml
-# repo: https://github.com/nekohalawrence/PCR/tree/main/rule/mihomo
+# update_date: 20260130
+# update_url: https://raw.githubusercontent.com/nekohalawrence/proxy-resource/main/rule/yaml/telegram-classical.yaml
+# repo: https://github.com/nekohalawrence/proxy-resource/tree/main/rule/yaml
 
 # 参考规则
 # https://raw.githubusercontent.com/yuumimi/rules/release/clash/telegram.txt
@@ -18,6 +18,15 @@
 # PROCESS-NAME: 5
 # TOTAL: 43
 
+
+
+# 规则计数
+# DOMAIN: 2
+# DOMAIN-KEYWORD: 1
+# DOMAIN-SUFFIX: 22
+# IP-CIDR: 4
+# IP-CIDR6: 4
+# PROCESS-NAME: 5
 payload:
   - DOMAIN,api.imem.app
   - DOMAIN,api.swiftgram.app

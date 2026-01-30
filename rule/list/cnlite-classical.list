@@ -1,16 +1,10 @@
-# name: cnlite-classical
-# content: 
-# update_date: 20250422
-# update_url: https://raw.githubusercontent.com/nekohalawrence/PCR/main/rule/Shadowrocket/cnlite-classical.list
-# repo: https://github.com/nekohalawrence/PCR/tree/main/rule/shadowrocket
+# name: cnlite
+# content: 这个规则用于收集一些直连的漏网之鱼规则，因为有些个人博客或小众的论坛并没有被大规则收录，规则如果设置的是黑名单可能没有问题，但如果是白名单就会出现问题，因为国内直连访问比代理更快就会出现连接很慢的问题。
+# update_date: 20260130
+# update_url: https://raw.githubusercontent.com/nekohalawrence/proxy-resource/main/rule/list/cnlite-classical.list
+# repo: https://github.com/nekohalawrence/proxy-resource/tree/main/rule/list
 
-# content: 
-# DOMAIN
 # DOMAIN-SUFFIX
 # DOMAIN-KEYWORD
-# IP-CIDR
 
-# DOMAIN-SUFFIX,xiaoe520.dpdns.org
-# DOMAIN-SUFFIX,nekoha520.dpdns.org
-# DOMAIN-SUFFIX,nekoha.dpdns.org
-# DOMAIN-SUFFIX,xiaoelaolunsi.dpdns.org
+

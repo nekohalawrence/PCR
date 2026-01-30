@@ -1,17 +1,44 @@
-# name: gfwlite-classical
-# content: 
-# updata: 20250422
-# updata_url: https://raw.githubusercontent.com/nekohalawrence/PCR/main/rule/Shadowrocket/gfwlite-classical.list
-# repo: https://github.com/nekohalawrence/PCR/tree/main/rule/shadowrocket
+# name: gfwlite
+# content: 因为对于大多数需要代理的服务基本上都被大佬收录了，所以这个规则只收集一些漏网之鱼的代理规则。其中，虽然有些站点被屏蔽了，但因为他的域名是 `.cn`，所以他会走直连，我们就无法访问。例如 `https://dns.icoa.cn/` 这个网址我们就会走直连，但他又被屏蔽了，所以我们无法访问。
+# update_date: 20260130
+# update_url: https://raw.githubusercontent.com/nekohalawrence/proxy-resource/main/rule/list/gfwlite-classical.list
+# repo: https://github.com/nekohalawrence/proxy-resource/tree/main/rule/list
 
-# DOMAIN: 1
+# DOMAIN: 
+# DOMAIN-KEYWORD: 
+# DOMAIN-SUFFIX: 
+# IP-CIDR: 
 
-# gamebanana
-DOMAIN,gamebanana.com
+
+
+# 包含的规则
+# 工具
+# 游戏资源
+# 小说
+# 论坛
+# DNS 资源
+# 域名服务
+# 机场服务
+
+# 规则计数
+# DOMAIN: 7
+# DOMAIN-SUFFIX: 5
+# 工具
+DOMAIN-SUFFIX,ticktick.com
+# 游戏资源
 DOMAIN-SUFFIX,gamebanana.com
-# x10hosting.com
-DOMAIN,x10hosting.com
+# 小说
+DOMAIN,hlib.cc
+DOMAIN-SUFFIX,alicesw.com
+# 论坛
+DOMAIN,hjd2048.com
+# DNS 资源
+DOMAIN,dns.icoa.cn
 # 域名服务
 DOMAIN,freedomain.one
 DOMAIN,www.site.ac
-DOMAIN-SUFFIX,ticktick.com
+DOMAIN,x10hosting.com
+DOMAIN-SUFFIX,xiaohuolongjc.top
+DOMAIN-SUFFIX,xhlxhlxiaohuolongjc.top
+# 机场服务
+DOMAIN,xn--wtq35pfyd55o.co
