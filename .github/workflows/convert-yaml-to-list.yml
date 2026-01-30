@@ -1,20 +1,18 @@
 name: Convert Rules YAML to LIST
 
 on:
-  workflow_dispatch: # 允许手动点击运行
+  workflow_dispatch:
   push:
     paths:
-      # 监控规则源文件的变化
       - 'rule/yaml/**.yaml'
       - 'rule/yaml/**.yml'
-      # 监控转换脚本的变化
       - '.github/scripts/convert_rules.py'
 
 jobs:
   convert:
     runs-on: ubuntu-latest
     permissions:
-      contents: write # 赋予写权限以提交生成的 list 文件
+      contents: write
 
     steps:
       - name: Checkout code
@@ -32,36 +30,31 @@ jobs:
 
       - name: Run Conversion Script
         env:
-          # 传递仓库信息给 Python 脚本 (例如: username/proxy-resource)
           GITHUB_REPOSITORY: ${{ github.repository }}
-          # 传递分支名 (例如: main)
           GITHUB_REF_NAME: ${{ github.ref_name }}
         run: |
-          # 指定脚本的相对路径
           SCRIPT_PATH=".github/scripts/convert_rules.py"
-          
           if [ -f "$SCRIPT_PATH" ]; then
-             echo "Detected script at $SCRIPT_PATH, starting conversion..."
              python "$SCRIPT_PATH"
           else
-             echo "Error: Script file not found at $SCRIPT_PATH"
+             echo "Error: Script not found at $SCRIPT_PATH"
              exit 1
           fi
 
       - name: Commit and Push changes
         run: |
-          # 配置 Git 机器人身份
           git config --local user.email "github-actions[bot]@users.noreply.github.com"
           git config --local user.name "github-actions[bot]"
           
-          # 添加生成的 list 目录
+          # 添加生成的 list 文件
           git add rule/list/
+          # 同时也添加更新后的 yaml 源文件（因为统计信息和 repo 链接更新了）
+          git add rule/yaml/
           
-          # 检查是否有实际变更
           if git diff --staged --quiet; then
-            echo "No changes detected. Skipping commit."
+            echo "No changes detected."
           else
-            echo "Changes detected. Committing..."
-            git commit -m "chore: auto-convert yaml rules to list [skip ci]"
+            echo "Changes detected, committing..."
+            git commit -m "chore: update rules stats, urls and list files [skip ci]"
             git push
           fi
