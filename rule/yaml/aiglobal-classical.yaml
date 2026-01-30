@@ -1,15 +1,16 @@
 # name: aiglobal
 # content: 这个规则用于收集AI相关的域名和IP地址，涵盖了OpenAI、BardAI和Copilot等主要AI服务提供商的相关资源。通过使用此规则，可以确保访问这些AI服务时的网络连接顺畅，避免因网络限制而影响使用体验。
 # update_date: 20251109
-# update_url: https://raw.githubusercontent.com/nekohalawrence/PCR/main/rule/mihomo/aiglobal-classical.yaml
-# repo: https://github.com/nekohalawrence/PCR/tree/main/rule/mihomo
+# update_url: https://raw.githubusercontent.com/nekohalawrence/PCR/main/rule/yaml/aiglobal-classical.yaml
+# repo: https://github.com/nekohalawrence/PCR/tree/main/rule/yaml
 
-# 参考规则
-# https://github.com/blackmatrix7/ios_rule_script/tree/master/rule/Clash/OpenAI
-# https://github.com/blackmatrix7/ios_rule_script/tree/master/rule/Clash/Copilot
+# 包含的规则
+# OpenAI
+# Copilot
 
-# DOMAIN
-# DOMAIN-SUFFIX
+# 规则计数
+# DOMAIN: 
+# DOMAIN-SUFFIX: 
 # DOMAIN-KEYWORD
 # IP-CIDR
 

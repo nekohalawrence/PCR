@@ -1,18 +1,18 @@
 # name: aiglobal
 # content: 
 # update_date: 20250422
-# update_url: https://raw.githubusercontent.com/nekohalawrence/PCR/main/rule/Shadowrocket/aiglobal-classical.list
-# repo: https://github.com/nekohalawrence/PCR/tree/main/rule/shadowrocket
+# update_url: https://raw.githubusercontent.com/nekohalawrence/PCR/main/rule/list/aiglobal-classical.list
+# repo: https://github.com/nekohalawrence/PCR/tree/main/rule/list
 
-# 参考规则
-# https://github.com/blackmatrix7/ios_rule_script/tree/master/rule/Shadowrocket/OpenAI
-# https://github.com/blackmatrix7/ios_rule_script/tree/master/rule/Shadowrocket/Copilot
-# https://github.com/blackmatrix7/ios_rule_script/tree/master/rule/Shadowrocket/BardAI
+# 包含的规则
+# OpenAI
+# Copilot
 
-# DOMAIN
-# DOMAIN-SUFFIX
-# DOMAIN-KEYWORD
-# IP-CIDR
+# 规则计数
+# DOMAIN: 
+# DOMAIN-SUFFIX: 
+# DOMAIN-KEYWORD: 
+# IP-CIDR: 
 
 # OpenAI
 DOMAIN,browser-intake-datadoghq.com
