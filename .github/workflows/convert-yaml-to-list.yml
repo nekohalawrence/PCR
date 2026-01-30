@@ -4,8 +4,8 @@ on:
   workflow_dispatch:
   push:
     paths:
-      - 'agency-resource/rule/yaml/**.yaml'
-      - 'agency-resource/rule/yaml/**.yml'
+      - 'proxy-resource/rule/yaml/**.yaml'
+      - 'proxy-resource/rule/yaml/**.yml'
       # 修改点 1: 监控脚本新路径的变化
       - '.github/scripts/convert_rules.py'
 
@@ -49,7 +49,7 @@ jobs:
           git config --local user.email "github-actions[bot]@users.noreply.github.com"
           git config --local user.name "github-actions[bot]"
           
-          git add agency-resource/rule/list/
+          git add proxy-resource/rule/list/
           
           if git diff --staged --quiet; then
             echo "No changes to commit."
