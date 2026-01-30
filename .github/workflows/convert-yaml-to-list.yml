@@ -4,8 +4,8 @@ on:
   workflow_dispatch:
   push:
     paths:
-      - 'proxy-resource/rule/yaml/**.yaml'
-      - 'proxy-resource/rule/yaml/**.yml'
+      - 'rule/yaml/**.yaml'
+      - 'rule/yaml/**.yml'
       # 修改点 1: 监控脚本新路径的变化
       - '.github/scripts/convert_rules.py'
 
