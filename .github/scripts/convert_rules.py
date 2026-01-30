@@ -6,7 +6,7 @@ import re
 # 配置
 SOURCE_DIR = 'proxy-resource/rule/yaml'
 TARGET_DIR = 'proxy-resource/rule/list'
-REPO_NAME = os.environ.get('GITHUB_REPOSITORY', 'nekohalawrence/PCR') # 默认值用于本地测试
+REPO_NAME = os.environ.get('GITHUB_REPOSITORY', 'nekohalawrence/proxy-resource') # 默认值用于本地测试
 BRANCH_NAME = 'main' # 假设主分支为 main
 
 def ensure_dir(directory):
