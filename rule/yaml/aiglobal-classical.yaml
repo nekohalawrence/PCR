@@ -4,7 +4,6 @@
 # update_url: https://raw.githubusercontent.com/nekohalawrence/proxy-resource/main/rule/yaml/aiglobal-classical.yaml
 # repo: https://github.com/nekohalawrence/proxy-resource/tree/main/rule/yaml
 
-
 # 包含的规则
 # OpenAI
 # BardAI
@@ -15,6 +14,7 @@
 # DOMAIN-SUFFIX: 30
 # IP-ASN: 1
 # IP-CIDR: 2
+
 payload:
   # OpenAI
   - DOMAIN,browser-intake-datadoghq.com
