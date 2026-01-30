@@ -1,18 +1,19 @@
 name: Convert Rules YAML to LIST
 
 on:
-  workflow_dispatch: # 允许手动触发
+  workflow_dispatch:
   push:
     paths:
       - 'agency-resource/rule/yaml/**.yaml'
       - 'agency-resource/rule/yaml/**.yml'
-      - 'convert_rules.py' # 脚本本身修改也触发
+      # 修改点 1: 监控脚本新路径的变化
+      - '.github/scripts/convert_rules.py'
 
 jobs:
   convert:
     runs-on: ubuntu-latest
     permissions:
-      contents: write # 需要写入权限来提交代码
+      contents: write
 
     steps:
       - name: Checkout code
@@ -31,13 +32,15 @@ jobs:
       - name: Run Conversion Script
         env:
           GITHUB_REPOSITORY: ${{ github.repository }}
+        # 修改点 2: 指定脚本的新路径进行执行
         run: |
-          # 假设脚本放在根目录，如果放在其他地方请修改路径
-          # 例如: python .github/scripts/convert_rules.py
-          if [ -f "convert_rules.py" ]; then
-             python .github/scripts/convert_rules.py
+          SCRIPT_PATH=".github/scripts/convert_rules.py"
+          
+          if [ -f "$SCRIPT_PATH" ]; then
+             echo "Found script at $SCRIPT_PATH, executing..."
+             python "$SCRIPT_PATH"
           else
-             echo "Script convert_rules.py not found at root, please checking file location."
+             echo "Error: Script not found at $SCRIPT_PATH"
              exit 1
           fi
 
@@ -46,10 +49,8 @@ jobs:
           git config --local user.email "github-actions[bot]@users.noreply.github.com"
           git config --local user.name "github-actions[bot]"
           
-          # 添加生成的目标目录
           git add agency-resource/rule/list/
           
-          # 检查暂存区是否有变化
           if git diff --staged --quiet; then
             echo "No changes to commit."
           else
