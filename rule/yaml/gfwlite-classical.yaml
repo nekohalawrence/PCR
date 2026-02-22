@@ -27,6 +27,7 @@ payload:
   - DOMAIN-SUFFIX,ticktick.com
   # 游戏资源
   - DOMAIN-SUFFIX,gamebanana.com
+  - DOMAIN,saucenao.com
   # 小说
   - DOMAIN,hlib.cc
   - DOMAIN-SUFFIX,alicesw.com
